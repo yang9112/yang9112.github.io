@@ -4,22 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Yang&#39;s Home</title>
+    <title>weka初探之数据预处理 | Yang&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Anysubway">
     
 
     
-    <meta name="description" content="Not only a better work is needed, but also a good life is importance">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Yang's Home">
-<meta property="og:url" content="http://yang9112.github.io/index.html">
+    <meta name="description" content="Abstract在我看来，机器学习工具使用的第一步就是熟悉如何处理数据，而学会如何处理数据的第一步就是数据的读取与存储。本文将会从数据的创建，读取以及存储这几个方面来介绍weka。
+使用Maven部署weka123456&amp;lt;!-- weka --&amp;gt;&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;nz.ac.waikato.cms.weka&amp;lt;/groupId">
+<meta property="og:type" content="article">
+<meta property="og:title" content="weka初探之数据预处理">
+<meta property="og:url" content="http://yang9112.github.io/2015/09/13/2015-09-13-weka/index.html">
 <meta property="og:site_name" content="Yang's Home">
-<meta property="og:description" content="Not only a better work is needed, but also a good life is importance">
+<meta property="og:description" content="Abstract在我看来，机器学习工具使用的第一步就是熟悉如何处理数据，而学会如何处理数据的第一步就是数据的读取与存储。本文将会从数据的创建，读取以及存储这几个方面来介绍weka。
+使用Maven部署weka123456&amp;lt;!-- weka --&amp;gt;&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;nz.ac.waikato.cms.weka&amp;lt;/groupId">
+<meta property="og:updated_time" content="2015-09-13T16:41:58.583Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Yang's Home">
-<meta name="twitter:description" content="Not only a better work is needed, but also a good life is importance">
+<meta name="twitter:title" content="weka初探之数据预处理">
+<meta name="twitter:description" content="Abstract在我看来，机器学习工具使用的第一步就是熟悉如何处理数据，而学会如何处理数据的第一步就是数据的读取与存储。本文将会从数据的创建，读取以及存储这几个方面来介绍weka。
+使用Maven部署weka123456&amp;lt;!-- weka --&amp;gt;&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;nz.ac.waikato.cms.weka&amp;lt;/groupId">
 
     
     
@@ -71,12 +75,10 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/2015/09/13/2015-09-13-weka/" title="weka初探之数据预处理" itemprop="url">weka初探之数据预处理</a>
@@ -90,9 +92,16 @@
     
   </p>
 </header>
-    <div class="article-content">
-        
-        <h1 id="Abstract">Abstract</h1><p>在我看来，机器学习工具使用的第一步就是熟悉如何处理数据，而学会如何处理数据的第一步就是数据的读取与存储。本文将会从数据的创建，读取以及存储这几个方面来介绍<strong>weka</strong>。</p>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Maven部署weka"><span class="toc-number">2.</span> <span class="toc-text">使用Maven部署weka</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#读取数据"><span class="toc-number">3.</span> <span class="toc-text">读取数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#arff文件的数据存储格式"><span class="toc-number">3.1.</span> <span class="toc-text">arff文件的数据存储格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#arff文件读取"><span class="toc-number">3.2.</span> <span class="toc-text">arff文件读取</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#arff文件存储"><span class="toc-number">4.</span> <span class="toc-text">arff文件存储</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Instances初始化"><span class="toc-number">5.</span> <span class="toc-text">Instances初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建instance"><span class="toc-number">5.1.</span> <span class="toc-text">创建instance</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DenseInstance"><span class="toc-number">5.1.1.</span> <span class="toc-text">DenseInstance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SparseInstance"><span class="toc-number">5.1.2.</span> <span class="toc-text">SparseInstance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例化Instances"><span class="toc-number">5.2.</span> <span class="toc-text">实例化Instances</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Abstract">Abstract</h1><p>在我看来，机器学习工具使用的第一步就是熟悉如何处理数据，而学会如何处理数据的第一步就是数据的读取与存储。本文将会从数据的创建，读取以及存储这几个方面来介绍<strong>weka</strong>。</p>
 <h1 id="使用Maven部署weka">使用Maven部署weka</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- weka --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>nz.ac.waikato.cms.weka<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>weka-dev<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.7.13<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>JAVA的编译工具我选择的是IDEA（黑色的界面欲罢不能，于是彻底抛弃eclipse）。</p>
 <h1 id="读取数据">读取数据</h1><p>在<strong>weka</strong>中最主要的数据类型就是<strong>Instances</strong>，数据文件都是<strong>*.arff</strong>的类型。</p>
@@ -112,14 +121,9 @@
 <p>用例如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 通过字典将已有数据转换为词向量同时添加Label位置</span><br><span class="line"> * <span class="doctag">@param</span> wiDic WD_ID 字典</span><br><span class="line"> * <span class="doctag">@param</span> text  内容</span><br><span class="line"> * <span class="doctag">@return</span>      稀疏向量实例</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Instance <span class="title">getKeyVec</span><span class="params">(Map&lt;String, Integer&gt; wiDic, String text)</span> </span>&#123;</span><br><span class="line">    List&lt;Term&gt; wd = ToAnalysis.parse(text);</span><br><span class="line">    SparseInstance sparseInstance = <span class="keyword">new</span> SparseInstance(<span class="number">1</span>, <span class="keyword">new</span> <span class="keyword">double</span>[]&#123;&#125;, <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;&#125;, wiDic.size());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (Term aWd : wd) &#123;</span><br><span class="line">        String key = aWd.getName();</span><br><span class="line">        <span class="keyword">if</span> (wiDic.containsKey(key))</span><br><span class="line">            sparseInstance.setValue(wiDic.get(key), <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    sparseInstance.setValue(wiDic.size(), <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sparseInstance.mergeInstance(<span class="keyword">new</span> SparseInstance(<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="实例化Instances">实例化<strong>Instances</strong></h2><p>用例如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 通过字典将已有数据转换为词向量矩阵</span><br><span class="line"> * <span class="doctag">@param</span> wiDic WD_ID 字典</span><br><span class="line"> * <span class="doctag">@param</span> text  文字内容</span><br><span class="line"> * <span class="doctag">@throws</span> Exception</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Instances <span class="title">getKeyMatrix</span><span class="params">(Map&lt;String, Integer&gt; wiDic, List&lt;String&gt; text, List&lt;String&gt; score)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ArrayList&lt;Attribute&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> idx = <span class="number">0</span>; idx &lt; wiDic.size(); idx++)</span><br><span class="line">        arrayList.add(<span class="keyword">new</span> Attribute(String.valueOf(idx)));</span><br><span class="line">    List&lt;String&gt; arrayList1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    arrayList1.add(<span class="string">"2"</span>);</span><br><span class="line">    arrayList1.add(<span class="string">"1"</span>);</span><br><span class="line">    arrayList1.add(<span class="string">"0"</span>);</span><br><span class="line">    arrayList.add(<span class="keyword">new</span> Attribute(<span class="string">"class"</span>, arrayList1));</span><br><span class="line"></span><br><span class="line">    Instances instances = <span class="keyword">new</span> Instances(<span class="string">"DataSet"</span>, arrayList, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> idx = <span class="number">0</span>; idx &lt; text.size(); idx++) &#123;</span><br><span class="line">        instances.add(idx, getKeyVec(wiDic, text.get(idx)));</span><br><span class="line">        <span class="keyword">int</span> result = Integer.valueOf(score.get(idx)) + <span class="number">1</span>;</span><br><span class="line">        instances.instance(idx).setValue(wiDic.size(), String.valueOf(result));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instances;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><code>Attribute</code>：用于创建属性<br><strong>Instances</strong>初始化后只需要添加<strong>Instance</strong>即可。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
+  
+	</div>
+		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
@@ -137,192 +141,47 @@
 
 
 
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yang9112.github.io/2015/09/13/2015-09-13-weka/" data-title="weka初探之数据预处理 | Yang&#39;s Home" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
 
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/09/13/2015-09-13-weka/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/09/13/2015-09-13-weka/" data-count-type="comments">&nbsp;</a>
-	
-</div>
 
 </footer>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/09/13/2015-09-13-Hexo/" title="构建个人网站的血泪史" itemprop="url">构建个人网站的血泪史</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anysubway" target="_blank" itemprop="author">Anysubway</a>
-		
-  <p class="article-time">
-    <time datetime="2015-09-13T08:22:54.000Z" itemprop="datePublished"> 发表于 2015-09-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>其实最开始的开始，我只是想要有个地方可以记录下自己的学习，有个地方可以放放自己的随笔。怎么说呢？总觉得云笔记太low，还有就是显示不够炫酷……blabla一堆理由。（作为程序猿，赶脚只能在这些地方装装bigger了）。所以就萌生了这样一个想法，我要自己弄个blog玩玩，然而在最初有这个想法的时候，看了下已有的一些博客网站（在没有经过仔细的调查研究的情况下），认为这个事情很复杂，随后整个事情就被耽搁下来了！好啦，言归正传。</p>
-<h2 id="博客搭建需求">博客搭建需求</h2><p>本文仅以windows为默认系统，OS以及LINUX可以移步<a href="https://hexo.io/docs/" target="_blank" rel="external">hexo</a>主页</p>
-<blockquote>
-<ul>
-<li>github账号一个</li>
-<li><a href="https://nodejs.org/en/" target="_blank" rel="external">安装</a> Node.js</li>
-<li><a href="http://www.git-scm.com/download/" target="_blank" rel="external">安装</a> Git(目测GitShell也支持，未尝试=。=）</li>
-</ul>
-</blockquote>
-<h2 id="安装Hexo">安装Hexo</h2><ol>
-<li><p>直接使用<code>npm</code>命令即可</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建hexo文件夹<br>进入到本地想要创建hexo代码的文件下</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装依赖包</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="运行hexo与效果查看">运行hexo与效果查看</h2><p>执行以下命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g //根据已有的配置生成网页文件</span><br><span class="line">hexo s //启动在本地查看效果的服务</span><br></pre></td></tr></table></figure>
-<p>浏览器输入<code>localhost:4000</code>即可查看本地生成的页面了。</p>
-<h2 id="如何托管代码到github">如何托管代码到github</h2><p>找到hexo主目录中的配置文件<code>_config.ymp</code></p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Deployment</span></span><br><span class="line"><span class="preprocessor">## Docs: http://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="label">deploy:</span></span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line"><span class="label">branch:</span> master</span><br></pre></td></tr></table></figure>
-<p>只需要将上述代码中的username换成自己用户名就好了。至于如何通过github生成自己的动态网页生成自己的网页地址，在网上有着详细的教程，这里就不展开了（毕竟只是log）。</p>
-<p>毕竟只是菜鸟，后续有学习体会继续更新~</p>
-<h2 id="部分Q&amp;A">部分Q&amp;A</h2><p>安装过程中遇到的部分问题，以及解决办法</p>
-<h3 id="Q：hexo_d命令无法上传github">Q：<code>hexo d</code>命令无法上传github</h3><p>配置文件有问题，如果配置文件的路径没有问题，那么可能是https上传有问题（部分情况会有无法识别用户名等错误），通过修改为ssh地址以及修改origin的url:<code>git remote origin ssh_url</code>完成上传。</p>
-<h3 id="Q：主题怎么修改">Q：主题怎么修改</h3><p><code>git clone THEMES/PATH/TO/GITHUB PATH/TO/HEXO/ROOT/themes/THEMES_NAME</code> 然后修改配置文件即可<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Extensions</span></span><br><span class="line"><span class="preprocessor">## Plugins: http://hexo.io/plugins/</span></span><br><span class="line"><span class="preprocessor">## Themes: http://hexo.io/themes/</span></span><br><span class="line">theme: THEME_NAME</span><br></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/study/">study</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Hexo/">Hexo</a><a href="/tags/MarkDown/">MarkDown</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
+   	       
+	</article>
 	
-	  	<span></span>
-		<a href="/2015/09/13/2015-09-13-Hexo/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/09/13/2015-09-13-Hexo/" data-count-type="comments">&nbsp;</a>
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/09/13/2015-09-13-Hexo/"  title="构建个人网站的血泪史">
+ <strong>下一篇：</strong><br/> 
+ <span>构建个人网站的血泪史
+</span>
+</a>
+</div>
+
+</nav>
+
 	
-</div>
-
-</footer>
-
-
-    </article>
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/09/13/2015-09-13-weka/" data-title="weka初探之数据预处理" data-url="http://yang9112.github.io/2015/09/13/2015-09-13-weka/"></div>
+</section>
 
 
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/09/13/hello-world/" title="About blog &amp; About myself" itemprop="url">About blog &amp; About myself</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anysubway" target="_blank" itemprop="author">Anysubway</a>
-		
-  <p class="article-time">
-    <time datetime="2015-09-13T06:09:16.000Z" itemprop="datePublished"> 发表于 2015-09-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="关于BLOG，关于自己">关于BLOG，关于自己</h1><hr>
-<p>其实从有写个人博客的想法到真正建立起来中间隔了3年，为此我也是被自己深深的折服了，啧啧。</p>
-<p>我曾经看到说有写博客的三大境界：</p>
-<blockquote>
-<ul>
-<li>第一层境界：图个新鲜，能提升bigger，不知道什么时候就停更了。</li>
-<li>第二层境界：博客写太多，开源网站提供的资源不够惬意，需要自己定制化需求。</li>
-<li>第三层境界：管理博客太麻烦，最好找人管理，自己只要写博客就好了。</li>
-</ul>
-</blockquote>
-<p>至于我？那么暂时还肯定是第一层次呐，嘿嘿。<br><img src="http://img5.duitang.com/uploads/item/201507/07/20150707093041_LvwdB.thumb.700_0.jpeg" alt="嘿嘿"></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/blog/">blog</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/essay/">essay</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/09/13/hello-world/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/09/13/hello-world/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-</div>
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Maven部署weka"><span class="toc-number">2.</span> <span class="toc-text">使用Maven部署weka</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#读取数据"><span class="toc-number">3.</span> <span class="toc-text">读取数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#arff文件的数据存储格式"><span class="toc-number">3.1.</span> <span class="toc-text">arff文件的数据存储格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#arff文件读取"><span class="toc-number">3.2.</span> <span class="toc-text">arff文件读取</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#arff文件存储"><span class="toc-number">4.</span> <span class="toc-text">arff文件存储</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Instances初始化"><span class="toc-number">5.</span> <span class="toc-text">Instances初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建instance"><span class="toc-number">5.1.</span> <span class="toc-text">创建instance</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DenseInstance"><span class="toc-number">5.1.1.</span> <span class="toc-text">DenseInstance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SparseInstance"><span class="toc-number">5.1.2.</span> <span class="toc-text">SparseInstance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例化Instances"><span class="toc-number">5.2.</span> <span class="toc-text">实例化Instances</span></a></li></ol></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -473,12 +332,89 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
@@ -585,4 +521,4 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!-- Tiny_search End -->
 
   </body>
- </html>
+</html>
