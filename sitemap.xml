@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yang9112.github.io/about/index.html</loc>
+    <lastmod>2015-09-13T08:27:59.600Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yang9112.github.io/2015/09/13/Hexo-2015-09-13/</loc>
     <lastmod>2015-09-13T08:24:23.542Z</lastmod>
   </url>
