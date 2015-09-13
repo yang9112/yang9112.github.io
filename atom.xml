@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Tips of Work and Study]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yang9112.github.io/"/>
-  <updated>2015-09-13T02:02:33.861Z</updated>
+  <updated>2015-09-13T05:43:00.613Z</updated>
   <id>http://yang9112.github.io/</id>
   
   <author>
@@ -15,24 +15,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Hello World]]></title>
+    <title><![CDATA[about blog, about myself.]]></title>
     <link href="http://yang9112.github.io/2015/09/13/hello-world/"/>
     <id>http://yang9112.github.io/2015/09/13/hello-world/</id>
-    <published>2015-09-13T02:02:33.861Z</published>
-    <updated>2015-09-13T02:02:33.861Z</updated>
-    <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+    <published>2015-09-13T05:43:44.722Z</published>
+    <updated>2015-09-13T05:43:00.613Z</updated>
+    <content type="html"><![CDATA[<h1 id="关于BLOG，关于自己">关于BLOG，关于自己</h1><hr>
+<p>其实从有写个人博客的想法到真正建立起来中间隔了3年，为此我也是被自己深深的折服了，啧啧。</p>
+<p>我曾经看到说有写博客的三大境界：</p>
+<blockquote>
+<ul>
+<li>第一层境界：图个新鲜，能提升bigger，不知道什么时候就停更了。</li>
+<li>第二层境界：博客写太多，开源网站提供的资源不够惬意，需要自己定制化需求。</li>
+<li>第三层境界：管理博客太麻烦，最好找人管理，自己只要写博客就好了。</li>
+</ul>
+</blockquote>
+<p>至于我？那么暂时还肯定是第一层次呐，嘿嘿。<br><img src="http://img5.duitang.com/uploads/item/201507/07/20150707093041_LvwdB.thumb.700_0.jpeg" alt="嘿嘿"></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io]]>
+    <![CDATA[<h1 id="关于BLOG，关于自己">关于BLOG，关于自己</h1><hr>
+<p>其实从有写个人博客的想法到真正建立起来中间隔了3年，为此我也是被自己深深的折服了，啧啧。</p>
+<p>我曾经看到说有写博客的三大境界：</p>
+<blockquote>
+<ul>
+<li>]]>
     </summary>
+    
+      <category term="随笔" scheme="http://yang9112.github.io/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
