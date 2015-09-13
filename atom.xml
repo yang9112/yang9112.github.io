@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Tips of Work and Study]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yang9112.github.io/"/>
-  <updated>2015-09-13T05:43:00.613Z</updated>
+  <updated>2015-09-13T08:24:23.542Z</updated>
   <id>http://yang9112.github.io/</id>
   
   <author>
@@ -15,11 +15,62 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[about blog, about myself.]]></title>
+    <title><![CDATA[构建个人网站的血泪史]]></title>
+    <link href="http://yang9112.github.io/2015/09/13/Hexo-2015-09-13/"/>
+    <id>http://yang9112.github.io/2015/09/13/Hexo-2015-09-13/</id>
+    <published>2015-09-13T08:22:54.000Z</published>
+    <updated>2015-09-13T08:24:23.542Z</updated>
+    <content type="html"><![CDATA[<h1 id="构建个人网站的血泪史">构建个人网站的血泪史</h1><hr>
+<p>其实最开始的开始，我只是想要有个地方可以记录下自己的学习，有个地方可以放放自己的随笔。怎么说呢？总觉得云笔记太low，还有就是显示不够炫酷……blabla一堆理由。（作为程序猿，赶脚只能在这些地方装装bigger了）。所以就萌生了这样一个想法，我要自己弄个blog玩玩，然而在最初有这个想法的时候，看了下已有的一些博客网站（在没有经过仔细的调查研究的情况下），认为这个事情很复杂，随后整个事情就被耽搁下来了！好啦，言归正传。</p>
+<h2 id="博客搭建需求">博客搭建需求</h2><p>本文仅以windows为默认系统，OS以及LINUX可以移步<a href="https://hexo.io/docs/" target="_blank" rel="external">hexo</a>主页</p>
+<blockquote>
+<ul>
+<li>github账号一个</li>
+<li><a href="https://nodejs.org/en/" target="_blank" rel="external">安装</a> Node.js</li>
+<li>[安装][3] Git(目测GitShell也支持，未尝试=。=）</li>
+</ul>
+</blockquote>
+<h2 id="安装Hexo">安装Hexo</h2><ol>
+<li><p>直接使用<code>npm</code>命令即可</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建hexo文件夹<br>进入到本地想要创建hexo代码的文件下</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装依赖包</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="运行hexo与效果查看">运行hexo与效果查看</h2><p>执行以下命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g //根据已有的配置生成网页文件</span><br><span class="line">hexo s //启动在本地查看效果的服务</span><br></pre></td></tr></table></figure>
+<p>浏览器输入<code>localhost:4000</code>即可查看本地生成的页面了。</p>
+<h2 id="如何托管代码到github">如何托管代码到github</h2><p>找到hexo主目录中的配置文件<code>_config.ymp</code></p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Deployment</span></span><br><span class="line"><span class="preprocessor">## Docs: http://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="label">deploy:</span></span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line"><span class="label">branch:</span> master</span><br></pre></td></tr></table></figure>
+<p>只需要将上述代码中的username换成自己用户名就好了。至于如何通过github生成自己的动态网页生成自己的网页地址，在网上有着详细的教程，这里就不展开了（毕竟只是log）。</p>
+<p>毕竟只是菜鸟，后续有学习体会继续更新~</p>
+<h2 id="部分Q&amp;A">部分Q&amp;A</h2><p>安装过程中遇到的部分问题，以及解决办法</p>
+<h3 id="Q：hexo_d命令无法上传github">Q：<code>hexo d</code>命令无法上传github</h3><p>配置文件有问题，如果配置文件的路径没有问题，那么可能是https上传有问题（部分情况会有无法识别用户名等错误），通过修改为ssh地址以及修改origin的url:<code>git remote origin ssh_url</code>完成上传。</p>
+<h3 id="Q：主题怎么修改">Q：主题怎么修改</h3><p><code>git clone THEMES/PATH/TO/GITHUB PATH/TO/HEXO/ROOT/themes/THEMES_NAME</code> 然后修改配置文件即可<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Extensions</span></span><br><span class="line"><span class="preprocessor">## Plugins: http://hexo.io/plugins/</span></span><br><span class="line"><span class="preprocessor">## Themes: http://hexo.io/themes/</span></span><br><span class="line">theme: THEME_NAME</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="构建个人网站的血泪史">构建个人网站的血泪史</h1><hr>
+<p>其实最开始的开始，我只是想要有个地方可以记录下自己的学习，有个地方可以放放自己的随笔。怎么说呢？总觉得云笔记太low，还有就是显示不够炫酷……blabla一堆理由。（作为程序猿，赶脚只能在这些地]]>
+    </summary>
+    
+      <category term="Hexo" scheme="http://yang9112.github.io/tags/Hexo/"/>
+    
+      <category term="MarkDown" scheme="http://yang9112.github.io/tags/MarkDown/"/>
+    
+      <category term="logs" scheme="http://yang9112.github.io/categories/logs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[About blog & About myself]]></title>
     <link href="http://yang9112.github.io/2015/09/13/hello-world/"/>
     <id>http://yang9112.github.io/2015/09/13/hello-world/</id>
-    <published>2015-09-13T05:43:44.722Z</published>
-    <updated>2015-09-13T05:43:00.613Z</updated>
+    <published>2015-09-13T06:09:49.125Z</published>
+    <updated>2015-09-13T06:09:49.066Z</updated>
     <content type="html"><![CDATA[<h1 id="关于BLOG，关于自己">关于BLOG，关于自己</h1><hr>
 <p>其实从有写个人博客的想法到真正建立起来中间隔了3年，为此我也是被自己深深的折服了，啧啧。</p>
 <p>我曾经看到说有写博客的三大境界：</p>
@@ -42,6 +93,8 @@
     </summary>
     
       <category term="随笔" scheme="http://yang9112.github.io/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="blog" scheme="http://yang9112.github.io/categories/blog/"/>
     
   </entry>
   
