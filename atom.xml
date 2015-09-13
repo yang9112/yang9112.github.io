@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Tips of Work and Study]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yang9112.github.io/"/>
-  <updated>2015-09-13T08:24:23.542Z</updated>
+  <updated>2015-09-13T12:41:27.088Z</updated>
   <id>http://yang9112.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yang9112.github.io/2015/09/13/Hexo-2015-09-13/"/>
     <id>http://yang9112.github.io/2015/09/13/Hexo-2015-09-13/</id>
     <published>2015-09-13T08:22:54.000Z</published>
-    <updated>2015-09-13T08:24:23.542Z</updated>
+    <updated>2015-09-13T12:41:27.088Z</updated>
     <content type="html"><![CDATA[<h1 id="构建个人网站的血泪史">构建个人网站的血泪史</h1><hr>
 <p>其实最开始的开始，我只是想要有个地方可以记录下自己的学习，有个地方可以放放自己的随笔。怎么说呢？总觉得云笔记太low，还有就是显示不够炫酷……blabla一堆理由。（作为程序猿，赶脚只能在这些地方装装bigger了）。所以就萌生了这样一个想法，我要自己弄个blog玩玩，然而在最初有这个想法的时候，看了下已有的一些博客网站（在没有经过仔细的调查研究的情况下），认为这个事情很复杂，随后整个事情就被耽搁下来了！好啦，言归正传。</p>
 <h2 id="博客搭建需求">博客搭建需求</h2><p>本文仅以windows为默认系统，OS以及LINUX可以移步<a href="https://hexo.io/docs/" target="_blank" rel="external">hexo</a>主页</p>
@@ -61,7 +61,7 @@
     
       <category term="MarkDown" scheme="http://yang9112.github.io/tags/MarkDown/"/>
     
-      <category term="logs" scheme="http://yang9112.github.io/categories/logs/"/>
+      <category term="study" scheme="http://yang9112.github.io/categories/study/"/>
     
   </entry>
   
