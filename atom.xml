@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Tips of Work and Study]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yang9112.github.io/"/>
-  <updated>2015-09-26T14:36:11.662Z</updated>
+  <updated>2015-09-26T15:53:50.703Z</updated>
   <id>http://yang9112.github.io/</id>
   
   <author>
@@ -13,6 +13,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[random forest ---- mahout]]></title>
+    <link href="http://yang9112.github.io/2015/09/26/2015-09-26-rf/"/>
+    <id>http://yang9112.github.io/2015/09/26/2015-09-26-rf/</id>
+    <published>2015-09-26T15:53:45.000Z</published>
+    <updated>2015-09-26T15:53:50.703Z</updated>
+    <content type="html"><![CDATA[<h2 id="平台以及相关介绍">平台以及相关介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同<br>mahout中随机森林的实现，有两种办法：</p>
+<ol>
+<li>直接调用mahout-example中提供的训练方法</li>
+<li>自己根据已有的例子，自己来重新编写random forest代码</li>
+</ol>
+<p>如果要找第一种方法的命令行调用，点<a href="http://mahout.apache.org/users/classification/partial-implementation.html" target="_blank" rel="external">这里</a>，而本文主要使用了第一种方法的java实现。</p>
+<h2 id="random_forest的java调用实现">random forest的java调用实现</h2><p>随机森林的实现分为3个部分</p>
+<h3 id="实例化数据">实例化数据</h3><p>其实也就是分析数据的组成，具体调用代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化模型参数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initModel</span><span class="params">()</span> <span class="keyword">throws</span> IOException, DescriptorException </span>&#123;</span><br><span class="line">    String[] args = <span class="keyword">new</span> String[]&#123;</span><br><span class="line">            <span class="string">"-p"</span>, Constants.DATA_FEATURE_PATH,</span><br><span class="line">            <span class="string">"-f"</span>, Constants.RF_DATA_INFO_PATH,</span><br><span class="line">            <span class="string">"-d"</span>,  Constants.RF_FEATURE_NUM, <span class="string">"N"</span>, <span class="string">"L"</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//如果输出路径有文件存在，则删除</span></span><br><span class="line">    HadoopUtil.delete(<span class="keyword">new</span> Configuration(), <span class="keyword">new</span> Path(args[Arrays.asList(args).indexOf(<span class="string">"-f"</span>) + <span class="number">1</span>]));</span><br><span class="line">    Describe.main(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>参数表示：</p>
+<ol>
+<li><code>-p</code>，<code>--path</code>：训练集路径</li>
+<li><code>-f</code>，<code>--file</code>：训练集属性的输出路径</li>
+<li><code>-d</code>，<code>--descriptor</code>：属性描述</li>
+<li><code>-r</code>，<code>--regression</code>：并没有用到，具体属性不是很清楚（非必选）</li>
+</ol>
+<p>需要注意的是<code>--descriptor</code>，N（Numerical）为数值类型的属性， C（Categorical）为类别类型的属性，L（Label）为标签类别的属性，I（Ignore）为忽略此属性。在使用时3C表示CCC，即三个Categorical属性。比如一行记录为<code>&quot;0,tcp,ftp_data,SF,491,0,0,0&quot;</code>，那么他的<code>‐d</code>即为<code>&quot;‐d&quot;,&quot;N&quot;,&quot;3C&quot;,&quot;4N&quot;</code>。</p>
+<h3 id="训练数据">训练数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//训练数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fit</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    String[] arg = <span class="keyword">new</span> String[] &#123;</span><br><span class="line">            <span class="string">"--data"</span>, Constants.DATA_FEATURE_PATH,</span><br><span class="line">            <span class="string">"--dataset"</span>, Constants.RF_DATA_INFO_PATH,</span><br><span class="line">            <span class="string">"--output"</span>, Constants.RF_MODEL_PATH,</span><br><span class="line">            <span class="string">"--nbtrees"</span>, Constants.RF_TREE_NUM,</span><br><span class="line">            <span class="string">"-ms"</span>, Constants.RF_MINSPLIT_NUM</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//如果输出路径有文件存在，则删除</span></span><br><span class="line">    HadoopUtil.delete(<span class="keyword">new</span> Configuration(), <span class="keyword">new</span> Path(arg[Arrays.asList(arg).indexOf(<span class="string">"--output"</span>) + <span class="number">1</span>]));</span><br><span class="line">    BuildForest.main(arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数如下：</p>
+<ol>
+<li><code>-d</code>，<code>--data</code>：训练数据路径</li>
+<li><code>-ds</code>，<code>--dataset</code>：上一个步骤的实例属性路径</li>
+<li><code>-o</code>，<code>--output</code>：模型输出路径</li>
+<li><code>-t</code>，<code>-nbtrees</code>：随机森林用到的nb树的个数</li>
+</ol>
+<p>以上是必选参数，此外还有另外一些参数，比如：<code>-p</code>，<code>-ms</code>等比较多，可以参见官网，基本上来说仅仅使用默认值也是可以满足需求的。</p>
+<h3 id="预测数据">预测数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//预测数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">predictLine</span><span class="params">(TestForest tf, String line)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    String[] arg = <span class="keyword">new</span> String[] &#123;</span><br><span class="line">            <span class="string">"--String"</span>, line,</span><br><span class="line">            <span class="string">"--dataset"</span>, Constants.MODEL_INFO_PATH,</span><br><span class="line">            <span class="string">"--model"</span>, Constants.MODEL_PATH</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> TestForest.main(arg, tf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数如下：</p>
+<ol>
+<li><code>-d</code>，<code>--data</code>：测试数据路径</li>
+<li><code>-ds</code>，<code>--dataset</code>：实例属性路径</li>
+<li><code>-o</code>，<code>--output</code>：预测数据输出路径</li>
+<li><code>-m</code>，<code>--model</code>：模型路径</li>
+<li><code>-a</code>，<code>--analyze</code>：是否需要分析预测结果（非必需）</li>
+<li><code>-mr</code>，<code>--mapredcue</code>：是否采用mapreduce（非必需）<br>在这里，因为实际需要，我修改了TestForest代码，加入了一个参数String，其实也就是预测数据中的一行。而为了能够不用每次都创建一个新的预测类，所以还传入了一个预测类参数。</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="平台以及相关介绍">平台以及相关介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同<br>mahout中随机森林的实现，有两种办法：</p>
+<ol>
+<li>直接调用mahout-example中提供的]]>
+    </summary>
+    
+      <category term="MachineLearning" scheme="http://yang9112.github.io/tags/MachineLearning/"/>
+    
+      <category term="java" scheme="http://yang9112.github.io/tags/java/"/>
+    
+      <category term="mahout" scheme="http://yang9112.github.io/tags/mahout/"/>
+    
+      <category term="study" scheme="http://yang9112.github.io/categories/study/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[logistic regression ---- mahout]]></title>
@@ -36,29 +94,6 @@
     <summary type="html">
     <![CDATA[<h2 id="平台与环境介绍">平台与环境介绍</h2><p>这里主要介绍了如何是用mahout实现的逻辑回归算法。</p>
 <p>部署环境：<strong>win7 64x</strong><br>开发环境：<strong>IntelliJ IDEA</strong><br>]]>
-    </summary>
-    
-      <category term="MachineLearning" scheme="http://yang9112.github.io/tags/MachineLearning/"/>
-    
-      <category term="java" scheme="http://yang9112.github.io/tags/java/"/>
-    
-      <category term="mahout" scheme="http://yang9112.github.io/tags/mahout/"/>
-    
-      <category term="study" scheme="http://yang9112.github.io/categories/study/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[random forest ---- mahout]]></title>
-    <link href="http://yang9112.github.io/2015/09/26/2015-09-26-rf/"/>
-    <id>http://yang9112.github.io/2015/09/26/2015-09-26-rf/</id>
-    <published>2015-09-26T11:44:39.000Z</published>
-    <updated>2015-09-26T15:03:36.351Z</updated>
-    <content type="html"><![CDATA[<h2 id="平台与环境介绍">平台与环境介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同</p>
-<h2 id="random_forest实现">random forest实现</h2>]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="平台与环境介绍">平台与环境介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同</p>
-<h2 id="random_forest实现">random forest实现</h2>]]>
     </summary>
     
       <category term="MachineLearning" scheme="http://yang9112.github.io/tags/MachineLearning/"/>
