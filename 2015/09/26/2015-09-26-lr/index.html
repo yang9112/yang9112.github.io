@@ -4,23 +4,32 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>构建个人网站的血泪史 | Yang&#39;s Home</title>
+    <title>2015-09-26-lr | Yang&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Anysubway">
     
 
     
-    <meta name="description" content="其实最开始的开始，我只是想要有个地方可以记录下自己的学习，有个地方可以放放自己的随笔。怎么说呢？总觉得云笔记太low，还有就是显示不够炫酷……blabla一堆理由。（作为程序猿，赶脚只能在这些地方装装bigger了）。所以就萌生了这样一个想法，我要自己弄个blog玩玩，然而在最初有这个想法的时候，看了下已有的一些博客网站（在没有经过仔细的调查研究的情况下），认为这个事情很复杂，随后整个事情就被耽搁">
+    <meta name="description" content="平台与环境介绍这里主要介绍了如何是用mahout实现的逻辑回归算法。
+部署环境：win7 64x开发环境：IntelliJ IDEA项目管理：maven
+以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。
+另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。如果想要利用windows中hadoop还需要配套的winutil.e">
 <meta property="og:type" content="article">
-<meta property="og:title" content="构建个人网站的血泪史">
-<meta property="og:url" content="http://yang9112.github.io/2015/09/13/2015-09-13-hexo/index.html">
+<meta property="og:title" content="2015-09-26-lr">
+<meta property="og:url" content="http://yang9112.github.io/2015/09/26/2015-09-26-lr/index.html">
 <meta property="og:site_name" content="Yang's Home">
-<meta property="og:description" content="其实最开始的开始，我只是想要有个地方可以记录下自己的学习，有个地方可以放放自己的随笔。怎么说呢？总觉得云笔记太low，还有就是显示不够炫酷……blabla一堆理由。（作为程序猿，赶脚只能在这些地方装装bigger了）。所以就萌生了这样一个想法，我要自己弄个blog玩玩，然而在最初有这个想法的时候，看了下已有的一些博客网站（在没有经过仔细的调查研究的情况下），认为这个事情很复杂，随后整个事情就被耽搁">
-<meta property="og:updated_time" content="2015-09-22T03:00:57.007Z">
+<meta property="og:description" content="平台与环境介绍这里主要介绍了如何是用mahout实现的逻辑回归算法。
+部署环境：win7 64x开发环境：IntelliJ IDEA项目管理：maven
+以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。
+另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。如果想要利用windows中hadoop还需要配套的winutil.e">
+<meta property="og:updated_time" content="2015-09-26T14:31:14.271Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="构建个人网站的血泪史">
-<meta name="twitter:description" content="其实最开始的开始，我只是想要有个地方可以记录下自己的学习，有个地方可以放放自己的随笔。怎么说呢？总觉得云笔记太low，还有就是显示不够炫酷……blabla一堆理由。（作为程序猿，赶脚只能在这些地方装装bigger了）。所以就萌生了这样一个想法，我要自己弄个blog玩玩，然而在最初有这个想法的时候，看了下已有的一些博客网站（在没有经过仔细的调查研究的情况下），认为这个事情很复杂，随后整个事情就被耽搁">
+<meta name="twitter:title" content="2015-09-26-lr">
+<meta name="twitter:description" content="平台与环境介绍这里主要介绍了如何是用mahout实现的逻辑回归算法。
+部署环境：win7 64x开发环境：IntelliJ IDEA项目管理：maven
+以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。
+另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。如果想要利用windows中hadoop还需要配套的winutil.e">
 
     
     
@@ -78,14 +87,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/09/13/2015-09-13-hexo/" title="构建个人网站的血泪史" itemprop="url">构建个人网站的血泪史</a>
+      <a href="/2015/09/26/2015-09-26-lr/" title="2015-09-26-lr" itemprop="url">2015-09-26-lr</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Anysubway" target="_blank" itemprop="author">Anysubway</a>
 		
   <p class="article-time">
-    <time datetime="2015-09-13T08:22:54.000Z" itemprop="datePublished"> 发表于 2015-09-13</time>
+    <time datetime="2015-09-26T11:44:39.000Z" itemprop="datePublished"> 发表于 2015-09-26</time>
     
   </p>
 </header>
@@ -94,40 +103,22 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#博客搭建需求"><span class="toc-number">1.</span> <span class="toc-text">博客搭建需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Hexo"><span class="toc-number">2.</span> <span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行hexo与效果查看"><span class="toc-number">3.</span> <span class="toc-text">运行hexo与效果查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何托管代码到github"><span class="toc-number">4.</span> <span class="toc-text">如何托管代码到github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部分Q&A"><span class="toc-number">5.</span> <span class="toc-text">部分Q&A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q：hexo_d命令无法上传github"><span class="toc-number">5.1.</span> <span class="toc-text">Q：hexo d命令无法上传github</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q：主题怎么修改"><span class="toc-number">5.2.</span> <span class="toc-text">Q：主题怎么修改</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#平台与环境介绍"><span class="toc-number">1.</span> <span class="toc-text">平台与环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pom文件依赖库"><span class="toc-number">2.</span> <span class="toc-text">pom文件依赖库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logistic_regression实现"><span class="toc-number">3.</span> <span class="toc-text">logistic regression实现</span></a></li></ol>
 		
 		</div>
 		
-		<p>其实最开始的开始，我只是想要有个地方可以记录下自己的学习，有个地方可以放放自己的随笔。怎么说呢？总觉得云笔记太low，还有就是显示不够炫酷……blabla一堆理由。（作为程序猿，赶脚只能在这些地方装装bigger了）。所以就萌生了这样一个想法，我要自己弄个blog玩玩，然而在最初有这个想法的时候，看了下已有的一些博客网站（在没有经过仔细的调查研究的情况下），认为这个事情很复杂，随后整个事情就被耽搁下来了！好啦，言归正传。</p>
-<h2 id="博客搭建需求">博客搭建需求</h2><p>本文仅以windows为默认系统，OS以及LINUX可以移步<a href="https://hexo.io/docs/" target="_blank" rel="external">hexo</a>主页</p>
-<blockquote>
-<ul>
-<li>github账号一个</li>
-<li><a href="https://nodejs.org/en/" target="_blank" rel="external">安装</a> Node.js</li>
-<li><a href="http://www.git-scm.com/download/" target="_blank" rel="external">安装</a> Git(目测GitShell也支持，未尝试=。=）</li>
-</ul>
-</blockquote>
-<h2 id="安装Hexo">安装Hexo</h2><ol>
-<li><p>直接使用<code>npm</code>命令即可</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建hexo文件夹<br>进入到本地想要创建hexo代码的文件下</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装依赖包</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="运行hexo与效果查看">运行hexo与效果查看</h2><p>执行以下命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g //根据已有的配置生成网页文件</span><br><span class="line">hexo s //启动在本地查看效果的服务</span><br></pre></td></tr></table></figure>
-<p>浏览器输入<code>localhost:4000</code>即可查看本地生成的页面了。</p>
-<h2 id="如何托管代码到github">如何托管代码到github</h2><p>找到hexo主目录中的配置文件<code>_config.ymp</code></p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Deployment</span></span><br><span class="line"><span class="preprocessor">## Docs: http://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="label">deploy:</span></span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line"><span class="label">branch:</span> master</span><br></pre></td></tr></table></figure>
-<p>只需要将上述代码中的username换成自己用户名就好了。至于如何通过github生成自己的动态网页生成自己的网页地址，在网上有着详细的教程，这里就不展开了（毕竟只是log）。</p>
-<p>毕竟只是菜鸟，后续有学习体会继续更新~~</p>
-<h2 id="部分Q&amp;A">部分Q&amp;A</h2><p>安装过程中遇到的部分问题，以及解决办法</p>
-<h3 id="Q：hexo_d命令无法上传github">Q：<code>hexo d</code>命令无法上传github</h3><p>配置文件有问题，如果配置文件的路径没有问题，那么可能是https上传有问题（部分情况会有无法识别用户名等错误），通过修改为ssh地址以及修改origin的url:<code>git remote origin ssh_url</code>完成上传。</p>
-<h3 id="Q：主题怎么修改">Q：主题怎么修改</h3><p><code>git clone THEMES/PATH/TO/GITHUB PATH/TO/HEXO/ROOT/themes/THEMES_NAME</code> 然后修改配置文件即可<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Extensions</span></span><br><span class="line"><span class="preprocessor">## Plugins: http://hexo.io/plugins/</span></span><br><span class="line"><span class="preprocessor">## Themes: http://hexo.io/themes/</span></span><br><span class="line">theme: THEME_NAME</span><br></pre></td></tr></table></figure></p>
+		<h2 id="平台与环境介绍">平台与环境介绍</h2><p>这里主要介绍了如何是用mahout实现的逻辑回归算法。</p>
+<p>部署环境：<strong>win7 64x</strong><br>开发环境：<strong>IntelliJ IDEA</strong><br>项目管理：<strong>maven</strong></p>
+<p>以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。</p>
+<p>另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。<br>如果想要利用windows中hadoop还需要配套的winutil.exe以及hadoop.lib等，这有2个解决办法，一个是自己编译，一个是找现成的。</p>
+<h2 id="pom文件依赖库">pom文件依赖库</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;!-- mahout --&#62;&#10;&#60;dependency&#62;&#10;    &#60;groupId&#62;org.apache.mahout&#60;/groupId&#62;&#10;    &#60;artifactId&#62;mahout-math&#60;/artifactId&#62;&#10;    &#60;version&#62;0.11.0&#60;/version&#62;&#10;&#60;/dependency&#62;&#10;&#60;dependency&#62;&#10;    &#60;groupId&#62;org.apache.mahout&#60;/groupId&#62;&#10;    &#60;artifactId&#62;mahout-mr&#60;/artifactId&#62;&#10;    &#60;version&#62;0.11.0&#60;/version&#62;&#10;&#60;/dependency&#62;</span><br></pre></td></tr></table></figure>
+<p>以上第一个是mahout数学库<br>第二个就是mr函数库，本文用的是mahout-0.11.0版本。</p>
+<h2 id="logistic_regression实现">logistic regression实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化模型参数</span></span><br><span class="line">OnlineLogisticRegression lrModel = <span class="keyword">new</span> OnlineLogisticRegression(classNum, featureNum, <span class="keyword">new</span> L2(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+<p>其中<strong>classNum</strong>表示的是分类的数量，而<strong>featureNum</strong>表示特征的个数，而最后的参数则是正则化方法，这里采用了<strong>L2</strong>正则化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrModel.train(yTrain.get(idx).intValue(), xTrain.viewRow(idx));</span><br></pre></td></tr></table></figure>
+<p>LR需要将数据一个一个的放进去训练，所以如果是有序的数据最好在训练之前做一下shuffle，从而能够的到更好的结果，以下为完整的训练过程。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//训练数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Matrix <span class="title">fit</span><span class="params">(Matrix xTrain, List&lt;Float&gt; yTrain, Integer trainNum)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; trainNum; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> idx = <span class="number">0</span>; idx &lt; xTrain.rowSize(); idx++) &#123;</span><br><span class="line">            lrModel.train(yTrain.get(idx).intValue(), xTrain.viewRow(idx));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lrModel.classifyFull(xTrain);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中<strong>xTrain</strong>为训练集（可以是稀疏矩阵的形式），<strong>yTrain</strong>为label,<strong>trainNum</strong>表示迭代次数，对于很稀疏的数据，一般不宜太大。<br>相对于训练数据，预测也是非常简单的，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrModel.classifyFull(xTest);</span><br></pre></td></tr></table></figure></p>
+<p>其中xTest为测试集矩阵，返回在不同分类上的概率。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -141,7 +132,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Hexo/">Hexo</a><a href="/tags/MarkDown/">MarkDown</a>
+  <span></span> <a href="/tags/MachineLearning/">MachineLearning</a><a href="/tags/java/">java</a><a href="/tags/mahout/">mahout</a>
   </div>
 
 </div>
@@ -150,7 +141,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yang9112.github.io/2015/09/13/2015-09-13-hexo/" data-title="构建个人网站的血泪史 | Yang&#39;s Home" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yang9112.github.io/2015/09/26/2015-09-26-lr/" data-title="2015-09-26-lr | Yang&#39;s Home" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -163,19 +154,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/09/13/2015-09-13-weka/" title="weka初探之数据预处理">
-  <strong>上一篇：</strong><br/>
-  <span>
-  weka初探之数据预处理</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/09/13/hello-world/"  title="About blog &amp; About myself">
+<a href="/2015/09/13/2015-09-13-weka/"  title="weka初探之数据预处理">
  <strong>下一篇：</strong><br/> 
- <span>About blog &amp; About myself
+ <span>weka初探之数据预处理
 </span>
 </a>
 </div>
@@ -184,7 +167,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/09/13/2015-09-13-hexo/" data-title="构建个人网站的血泪史" data-url="http://yang9112.github.io/2015/09/13/2015-09-13-hexo/"></div>
+	<div class="ds-thread" data-thread-key="2015/09/26/2015-09-26-lr/" data-title="2015-09-26-lr" data-url="http://yang9112.github.io/2015/09/26/2015-09-26-lr/"></div>
 </section>
 
 
@@ -194,7 +177,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#博客搭建需求"><span class="toc-number">1.</span> <span class="toc-text">博客搭建需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Hexo"><span class="toc-number">2.</span> <span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行hexo与效果查看"><span class="toc-number">3.</span> <span class="toc-text">运行hexo与效果查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何托管代码到github"><span class="toc-number">4.</span> <span class="toc-text">如何托管代码到github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部分Q&A"><span class="toc-number">5.</span> <span class="toc-text">部分Q&A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q：hexo_d命令无法上传github"><span class="toc-number">5.1.</span> <span class="toc-text">Q：hexo d命令无法上传github</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q：主题怎么修改"><span class="toc-number">5.2.</span> <span class="toc-text">Q：主题怎么修改</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#平台与环境介绍"><span class="toc-number">1.</span> <span class="toc-text">平台与环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pom文件依赖库"><span class="toc-number">2.</span> <span class="toc-text">pom文件依赖库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logistic_regression实现"><span class="toc-number">3.</span> <span class="toc-text">logistic regression实现</span></a></li></ol>
  
   </div>
 
