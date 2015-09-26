@@ -79,7 +79,7 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/09/26/2015-09-26-lr/" title="2015-09-26-lr" itemprop="url">2015-09-26-lr</a>
+      <a href="/2015/09/26/2015-09-26-lr/" title="logistic regression ---- mahout" itemprop="url">logistic regression ---- mahout</a>
   </h1>
   <p class="article-author">By
        
@@ -96,7 +96,7 @@
 <p>部署环境：<strong>win7 64x</strong><br>开发环境：<strong>IntelliJ IDEA</strong><br>项目管理：<strong>maven</strong></p>
 <p>以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。</p>
 <p>另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。<br>如果想要利用windows中hadoop还需要配套的winutil.exe以及hadoop.lib等，这有2个解决办法，一个是自己编译，一个是找现成的。</p>
-<h2 id="pom文件依赖库">pom文件依赖库</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;!-- mahout --&#62;&#10;&#60;dependency&#62;&#10;    &#60;groupId&#62;org.apache.mahout&#60;/groupId&#62;&#10;    &#60;artifactId&#62;mahout-math&#60;/artifactId&#62;&#10;    &#60;version&#62;0.11.0&#60;/version&#62;&#10;&#60;/dependency&#62;&#10;&#60;dependency&#62;&#10;    &#60;groupId&#62;org.apache.mahout&#60;/groupId&#62;&#10;    &#60;artifactId&#62;mahout-mr&#60;/artifactId&#62;&#10;    &#60;version&#62;0.11.0&#60;/version&#62;&#10;&#60;/dependency&#62;</span><br></pre></td></tr></table></figure>
+<h2 id="pom文件依赖库">pom文件依赖库</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- mahout --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.mahout&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mahout-math&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.11.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.mahout&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mahout-mr&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.11.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 <p>以上第一个是mahout数学库<br>第二个就是mr函数库，本文用的是mahout-0.11.0版本。</p>
 <h2 id="logistic_regression实现">logistic regression实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化模型参数</span></span><br><span class="line">OnlineLogisticRegression lrModel = <span class="keyword">new</span> OnlineLogisticRegression(classNum, featureNum, <span class="keyword">new</span> L2(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
 <p>其中<strong>classNum</strong>表示的是分类的数量，而<strong>featureNum</strong>表示特征的个数，而最后的参数则是正则化方法，这里采用了<strong>L2</strong>正则化。</p>
