@@ -4,32 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>logistic regression ---- mahout | Yang&#39;s Home</title>
+    <title>random forest ---- mahout | Yang&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Anysubway">
     
 
     
-    <meta name="description" content="平台与环境介绍这里主要介绍了如何是用mahout实现的逻辑回归算法。
-部署环境：win7 64x开发环境：IntelliJ IDEA项目管理：maven
-以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。
-另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。如果想要利用windows中hadoop还需要配套的winutil.e">
+    <meta name="description" content="平台与环境介绍mahout配置与之前相同
+random forest实现">
 <meta property="og:type" content="article">
-<meta property="og:title" content="logistic regression ---- mahout">
-<meta property="og:url" content="http://yang9112.github.io/2015/09/26/2015-09-26-lr/index.html">
+<meta property="og:title" content="random forest ---- mahout">
+<meta property="og:url" content="http://yang9112.github.io/2015/09/26/2015-09-26-rf/index.html">
 <meta property="og:site_name" content="Yang's Home">
-<meta property="og:description" content="平台与环境介绍这里主要介绍了如何是用mahout实现的逻辑回归算法。
-部署环境：win7 64x开发环境：IntelliJ IDEA项目管理：maven
-以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。
-另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。如果想要利用windows中hadoop还需要配套的winutil.e">
-<meta property="og:updated_time" content="2015-09-26T14:36:11.662Z">
+<meta property="og:description" content="平台与环境介绍mahout配置与之前相同
+random forest实现">
+<meta property="og:updated_time" content="2015-09-26T15:03:36.351Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="logistic regression ---- mahout">
-<meta name="twitter:description" content="平台与环境介绍这里主要介绍了如何是用mahout实现的逻辑回归算法。
-部署环境：win7 64x开发环境：IntelliJ IDEA项目管理：maven
-以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。
-另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。如果想要利用windows中hadoop还需要配套的winutil.e">
+<meta name="twitter:title" content="random forest ---- mahout">
+<meta name="twitter:description" content="平台与环境介绍mahout配置与之前相同
+random forest实现">
 
     
     
@@ -87,7 +81,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/09/26/2015-09-26-lr/" title="logistic regression ---- mahout" itemprop="url">logistic regression ---- mahout</a>
+      <a href="/2015/09/26/2015-09-26-rf/" title="random forest ---- mahout" itemprop="url">random forest ---- mahout</a>
   </h1>
   <p class="article-author">By
        
@@ -103,23 +97,12 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#平台与环境介绍"><span class="toc-number">1.</span> <span class="toc-text">平台与环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pom文件依赖库"><span class="toc-number">2.</span> <span class="toc-text">pom文件依赖库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logistic_regression实现"><span class="toc-number">3.</span> <span class="toc-text">logistic regression实现</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#平台与环境介绍"><span class="toc-number">1.</span> <span class="toc-text">平台与环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#random_forest实现"><span class="toc-number">2.</span> <span class="toc-text">random forest实现</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="平台与环境介绍">平台与环境介绍</h2><p>这里主要介绍了如何是用mahout实现的逻辑回归算法。</p>
-<p>部署环境：<strong>win7 64x</strong><br>开发环境：<strong>IntelliJ IDEA</strong><br>项目管理：<strong>maven</strong></p>
-<p>以后的博文中也统一使用以上的平台和环境了，如果不同的话，会特别指出。</p>
-<p>另外为了配合mahout以及其他的一些算法的支持，还安装了相应的hadoop，这里采用的版本是2.5.2。<br>如果想要利用windows中hadoop还需要配套的winutil.exe以及hadoop.lib等，这有2个解决办法，一个是自己编译，一个是找现成的。</p>
-<h2 id="pom文件依赖库">pom文件依赖库</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- mahout --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.mahout&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mahout-math&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.11.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.mahout&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mahout-mr&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.11.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<p>以上第一个是mahout数学库<br>第二个就是mr函数库，本文用的是mahout-0.11.0版本。</p>
-<h2 id="logistic_regression实现">logistic regression实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化模型参数</span></span><br><span class="line">OnlineLogisticRegression lrModel = <span class="keyword">new</span> OnlineLogisticRegression(classNum, featureNum, <span class="keyword">new</span> L2(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
-<p>其中<strong>classNum</strong>表示的是分类的数量，而<strong>featureNum</strong>表示特征的个数，而最后的参数则是正则化方法，这里采用了<strong>L2</strong>正则化。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrModel.train(yTrain.get(idx).intValue(), xTrain.viewRow(idx));</span><br></pre></td></tr></table></figure>
-<p>LR需要将数据一个一个的放进去训练，所以如果是有序的数据最好在训练之前做一下shuffle，从而能够的到更好的结果，以下为完整的训练过程。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//训练数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Matrix <span class="title">fit</span><span class="params">(Matrix xTrain, List&lt;Float&gt; yTrain, Integer trainNum)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; trainNum; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> idx = <span class="number">0</span>; idx &lt; xTrain.rowSize(); idx++) &#123;</span><br><span class="line">            lrModel.train(yTrain.get(idx).intValue(), xTrain.viewRow(idx));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lrModel.classifyFull(xTrain);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>其中<strong>xTrain</strong>为训练集（可以是稀疏矩阵的形式），<strong>yTrain</strong>为label,<strong>trainNum</strong>表示迭代次数，对于很稀疏的数据，一般不宜太大。<br>相对于训练数据，预测也是非常简单的，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrModel.classifyFull(xTest);</span><br></pre></td></tr></table></figure></p>
-<p>其中xTest为测试集矩阵，返回在不同分类上的概率。</p>
-  
+		<h2 id="平台与环境介绍">平台与环境介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同</p>
+<h2 id="random_forest实现">random forest实现</h2>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -141,7 +124,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yang9112.github.io/2015/09/26/2015-09-26-lr/" data-title="logistic regression ---- mahout | Yang&#39;s Home" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yang9112.github.io/2015/09/26/2015-09-26-rf/" data-title="random forest ---- mahout | Yang&#39;s Home" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -154,11 +137,19 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2015/09/26/2015-09-26-lr/" title="logistic regression ---- mahout">
+  <strong>上一篇：</strong><br/>
+  <span>
+  logistic regression ---- mahout</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2015/09/26/2015-09-26-rf/"  title="random forest ---- mahout">
+<a href="/2015/09/13/2015-09-13-weka/"  title="weka初探之数据预处理">
  <strong>下一篇：</strong><br/> 
- <span>random forest ---- mahout
+ <span>weka初探之数据预处理
 </span>
 </a>
 </div>
@@ -167,7 +158,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/09/26/2015-09-26-lr/" data-title="logistic regression ---- mahout" data-url="http://yang9112.github.io/2015/09/26/2015-09-26-lr/"></div>
+	<div class="ds-thread" data-thread-key="2015/09/26/2015-09-26-rf/" data-title="random forest ---- mahout" data-url="http://yang9112.github.io/2015/09/26/2015-09-26-rf/"></div>
 </section>
 
 
@@ -177,7 +168,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#平台与环境介绍"><span class="toc-number">1.</span> <span class="toc-text">平台与环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pom文件依赖库"><span class="toc-number">2.</span> <span class="toc-text">pom文件依赖库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logistic_regression实现"><span class="toc-number">3.</span> <span class="toc-text">logistic regression实现</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#平台与环境介绍"><span class="toc-number">1.</span> <span class="toc-text">平台与环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#random_forest实现"><span class="toc-number">2.</span> <span class="toc-text">random forest实现</span></a></li></ol>
  
   </div>
 

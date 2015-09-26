@@ -49,6 +49,29 @@
   </entry>
   
   <entry>
+    <title><![CDATA[random forest ---- mahout]]></title>
+    <link href="http://yang9112.github.io/2015/09/26/2015-09-26-rf/"/>
+    <id>http://yang9112.github.io/2015/09/26/2015-09-26-rf/</id>
+    <published>2015-09-26T11:44:39.000Z</published>
+    <updated>2015-09-26T15:03:36.351Z</updated>
+    <content type="html"><![CDATA[<h2 id="平台与环境介绍">平台与环境介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同</p>
+<h2 id="random_forest实现">random forest实现</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="平台与环境介绍">平台与环境介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同</p>
+<h2 id="random_forest实现">random forest实现</h2>]]>
+    </summary>
+    
+      <category term="MachineLearning" scheme="http://yang9112.github.io/tags/MachineLearning/"/>
+    
+      <category term="java" scheme="http://yang9112.github.io/tags/java/"/>
+    
+      <category term="mahout" scheme="http://yang9112.github.io/tags/mahout/"/>
+    
+      <category term="study" scheme="http://yang9112.github.io/categories/study/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[weka初探之数据预处理]]></title>
     <link href="http://yang9112.github.io/2015/09/13/2015-09-13-weka/"/>
     <id>http://yang9112.github.io/2015/09/13/2015-09-13-weka/</id>
