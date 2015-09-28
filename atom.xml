@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Tips of Work and Study]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yang9112.github.io/"/>
-  <updated>2015-09-26T15:53:50.703Z</updated>
+  <updated>2015-09-28T10:03:21.627Z</updated>
   <id>http://yang9112.github.io/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <link href="http://yang9112.github.io/2015/09/26/2015-09-26-rf/"/>
     <id>http://yang9112.github.io/2015/09/26/2015-09-26-rf/</id>
     <published>2015-09-26T15:53:45.000Z</published>
-    <updated>2015-09-26T15:53:50.703Z</updated>
-    <content type="html"><![CDATA[<h2 id="平台以及相关介绍">平台以及相关介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同<br>mahout中随机森林的实现，有两种办法：</p>
+    <updated>2015-09-28T10:03:21.627Z</updated>
+    <content type="html"><![CDATA[<h2 id="平台以及相关介绍">平台以及相关介绍</h2><p><a href="/2015/09/26/2015-09-26-lr/">mahout配置</a>与之前相同<br>mahout中随机森林的实现，有两种办法：</p>
 <ol>
 <li>直接调用mahout-example中提供的训练方法</li>
 <li>自己根据已有的例子，自己来重新编写random forest代码</li>
@@ -57,9 +57,9 @@
 </ol>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="平台以及相关介绍">平台以及相关介绍</h2><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同<br>mahout中随机森林的实现，有两种办法：</p>
+    <![CDATA[<h2 id="平台以及相关介绍">平台以及相关介绍</h2><p><a href="/2015/09/26/2015-09-26-lr/">mahout配置</a>与之前相同<br>mahout中随机森林的实现，有两种办法：</p>
 <ol>
-<li>直接调用mahout-example中提供的]]>
+<li>直接调用mahout-ex]]>
     </summary>
     
       <category term="MachineLearning" scheme="http://yang9112.github.io/tags/MachineLearning/"/>
@@ -202,7 +202,7 @@
     <link href="http://yang9112.github.io/2015/09/13/hello-world/"/>
     <id>http://yang9112.github.io/2015/09/13/hello-world/</id>
     <published>2015-09-13T06:09:16.000Z</published>
-    <updated>2015-09-13T14:53:30.254Z</updated>
+    <updated>2015-09-28T10:05:18.064Z</updated>
     <content type="html"><![CDATA[<h1 id="关于BLOG，关于自己">关于BLOG，关于自己</h1><hr>
 <p>其实从有写个人博客的想法到真正建立起来中间隔了3年，为此我也是被自己深深的折服了，啧啧。</p>
 <p>我曾经看到说有写博客的三大境界：</p>
@@ -213,7 +213,7 @@
 <li>第三层境界：管理博客太麻烦，最好找人管理，自己只要写博客就好了。</li>
 </ul>
 </blockquote>
-<p>至于我？那么暂时还肯定是第一层次呐，嘿嘿。<br><img src="http://img5.duitang.com/uploads/item/201507/07/20150707093041_LvwdB.thumb.700_0.jpeg" alt="嘿嘿"></p>
+<p>至于我？那么暂时还肯定是第一层次呐，嘿嘿。<br><img src="/img/logo1.png" alt="嘿嘿"></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h1 id="关于BLOG，关于自己">关于BLOG，关于自己</h1><hr>
