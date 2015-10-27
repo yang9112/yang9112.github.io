@@ -1,0 +1,530 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>kmeans ---- mahout | Yang&#39;s Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Anysubway">
+    
+
+    
+    <meta name="description" content="平台以及相关介绍mahout配置与之前相同
+本文主要利用了mahout中的kmeans算法实现了数据的聚类，而训练数据依然使用了搜狗实验室提供的搜狗新闻数据。
+数据准备首先需要做的就是将新闻数据转换为向量矩阵。
+分词在这里推荐两种比较好用的分词工具（jieba分词以及ansj分词）。如果是用maven管理项目依赖的话可以很方便的下载和使用这些工具其中对于jieba分词来说：1&amp;#60;depend">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kmeans ---- mahout">
+<meta property="og:url" content="http://yang9112.github.io/2015/10/27/2015-10-27-kmeans/index.html">
+<meta property="og:site_name" content="Yang's Home">
+<meta property="og:description" content="平台以及相关介绍mahout配置与之前相同
+本文主要利用了mahout中的kmeans算法实现了数据的聚类，而训练数据依然使用了搜狗实验室提供的搜狗新闻数据。
+数据准备首先需要做的就是将新闻数据转换为向量矩阵。
+分词在这里推荐两种比较好用的分词工具（jieba分词以及ansj分词）。如果是用maven管理项目依赖的话可以很方便的下载和使用这些工具其中对于jieba分词来说：1&amp;#60;depend">
+<meta property="og:updated_time" content="2015-10-27T11:35:54.213Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kmeans ---- mahout">
+<meta name="twitter:description" content="平台以及相关介绍mahout配置与之前相同
+本文主要利用了mahout中的kmeans算法实现了数据的聚类，而训练数据依然使用了搜狗实验室提供的搜狗新闻数据。
+数据准备首先需要做的就是将新闻数据转换为向量矩阵。
+分词在这里推荐两种比较好用的分词工具（jieba分词以及ansj分词）。如果是用maven管理项目依赖的话可以很方便的下载和使用这些工具其中对于jieba分词来说：1&amp;#60;depend">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo2.png" alt="Yang&#39;s Home" title="Yang&#39;s Home"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Yang&#39;s Home">Yang&#39;s Home</a></h1>
+				<h2 class="blog-motto">Tips of Work and Study</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yang9112.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/27/2015-10-27-kmeans/" title="kmeans ---- mahout" itemprop="url">kmeans ---- mahout</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Anysubway" target="_blank" itemprop="author">Anysubway</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-27T11:03:18.000Z" itemprop="datePublished"> 发表于 2015-10-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#平台以及相关介绍"><span class="toc-number">1.</span> <span class="toc-text">平台以及相关介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据准备"><span class="toc-number">2.</span> <span class="toc-text">数据准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分词"><span class="toc-number">2.1.</span> <span class="toc-text">分词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量化数据"><span class="toc-number">2.2.</span> <span class="toc-text">向量化数据</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kmeans_算法使用"><span class="toc-number">3.</span> <span class="toc-text">kmeans 算法使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据输入"><span class="toc-number">3.1.</span> <span class="toc-text">数据输入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立模型"><span class="toc-number">3.2.</span> <span class="toc-text">建立模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型输出"><span class="toc-number">3.3.</span> <span class="toc-text">模型输出</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="平台以及相关介绍">平台以及相关介绍</h1><p><a href="../2015-09-26-lr/">mahout配置</a>与之前相同</p>
+<p>本文主要利用了mahout中的kmeans算法实现了数据的聚类，<br>而训练数据依然使用了搜狗实验室提供的搜狗新闻数据。</p>
+<h1 id="数据准备">数据准备</h1><p>首先需要做的就是将新闻数据转换为向量矩阵。</p>
+<h2 id="分词">分词</h2><p>在这里推荐两种比较好用的分词工具（jieba分词以及ansj分词）。<br>如果是用maven管理项目依赖的话可以很方便的下载和使用这些工具<br>其中对于jieba分词来说：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;dependency&#62;&#10;&#9;&#60;groupId&#62;com.huaban&#60;/groupId&#62;&#10;&#9;&#60;artifactId&#62;jieba-analysis&#60;/artifactId&#62;&#10;&#9;&#60;version&#62;1.0.2&#60;/version&#62;&#10;&#60;/dependency&#62;</span><br></pre></td></tr></table></figure></p>
+<p>而对于ansj来说：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;dependency&#62;&#10;&#9;&#60;groupId&#62;org.ansj&#60;/groupId&#62;&#10;&#9;&#60;artifactId&#62;ansj_seg&#60;/artifactId&#62;&#10;&#9;&#60;version&#62;2.0.8&#60;/version&#62;&#10;&#60;/dependency&#62;</span><br></pre></td></tr></table></figure></p>
+<h2 id="向量化数据">向量化数据</h2><p>通过SparseMatrix等hadoop.math自带的数据格式可以很方便的将这些单词转换为词向量，以下是一个简单的例子，自然还有很多其他的方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 将string[]类型的数据转换为稀疏矩阵表示形式</span><br><span class="line"> * <span class="doctag">@param</span> intVec    int类型数据</span><br><span class="line"> * <span class="doctag">@param</span> size      稀疏向量的大小</span><br><span class="line"> * <span class="doctag">@return</span>          稀疏向量</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RandomAccessSparseVector <span class="title">vectorTransfer</span><span class="params">(Integer[] intVec, Integer size)</span> </span>&#123;</span><br><span class="line">    RandomAccessSparseVector sparseVec = <span class="keyword">new</span> RandomAccessSparseVector(size);</span><br><span class="line">    <span class="keyword">for</span> (Integer aIntVec : intVec) sparseVec.set(aIntVec, <span class="number">1.0</span>);</span><br><span class="line">    <span class="keyword">return</span> sparseVec;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="kmeans_算法使用">kmeans 算法使用</h1><h2 id="数据输入">数据输入</h2><p>对于输入数据有两种办法，一种是直接拷贝已提供的标准数据集进行实验，另外一种则是通过已有的数据集自己做一个标准的输入数据集出来。既然需要满足自定义的数据集，那么毫无疑问，我们需要通过已有的数据集做一个标准的输入数据集。<br>由于我们这里使用的mahout是基于hadoop平台的，而hadoop主要接受的文件格式是SequenceFile。<br>那么我们自然而然的想到了通过已有的数据建立一个自己的SequenceFile文件，来作为kmeans的标准输入。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span><br><span class="line"> * 将稀疏数据写入文件</span><br><span class="line"> * <span class="doctag">@param</span> vectorList    向量数据</span><br><span class="line"> * <span class="doctag">@param</span> outPath       输出路径</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeSeqFile</span><span class="params">(List&lt;Vector&gt; vectorList, Path outPath)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line"></span><br><span class="line">    FileSystem fs = FileSystem.get(conf);</span><br><span class="line">    <span class="keyword">if</span> (!fs.exists(outPath))</span><br><span class="line">        HadoopUtil.delete(conf, outPath);</span><br><span class="line">    fs.mkdirs(outPath);</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"deprecation"</span>)</span><br><span class="line">    SequenceFile.Writer seqWriter = <span class="keyword">new</span> SequenceFile.Writer(fs, conf,</span><br><span class="line">            <span class="keyword">new</span> Path(outPath, <span class="string">"part-r-00000"</span>), LongWritable.class, VectorWritable.class);</span><br><span class="line">    SequenceFileVectorWriter writer = <span class="keyword">new</span> SequenceFileVectorWriter(seqWriter);</span><br><span class="line"></span><br><span class="line">    Collections.shuffle(vectorList);</span><br><span class="line">    writer.write(vectorList);</span><br><span class="line"></span><br><span class="line">    writer.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>关于deprecation：应该是有更好的方法写入文件的，但是在这里并没有具体的深入研究。</p>
+<h2 id="建立模型">建立模型</h2><p>既然准备好了输入文件，那么接下来就是聚类算法的实现了。具体代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * kmeans聚类</span><br><span class="line"> * <span class="doctag">@param</span> k             聚类个数</span><br><span class="line"> * <span class="doctag">@param</span> outFile       聚类结果输出路径</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(Integer k, Integer maxIterations, String outFile)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (trainVectorList != <span class="keyword">null</span> &amp;&amp; (trainVectorList.size() &gt;= k)) &#123;</span><br><span class="line">        System.out.println(<span class="string">"start k-means clustering..."</span>);</span><br><span class="line">        Path outPath = <span class="keyword">new</span> Path(outFile);</span><br><span class="line">        Path inPath = <span class="keyword">new</span> Path(outFile, INPUT_DATA_FILENAME);</span><br><span class="line">        Path clusterOutPath = <span class="keyword">new</span> Path(outFile, OUTPUT_DATA_FILENAME);</span><br><span class="line">        Path clustersSeeds = <span class="keyword">new</span> Path(outFile, RANDOM_SEED_FILENAME);</span><br><span class="line"></span><br><span class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//删除输出路径</span></span><br><span class="line">        HadoopUtil.delete(conf, outPath);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将词向量数据转为seq文件</span></span><br><span class="line">        writeSeqFile(trainVectorList, inPath);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//随机选取聚类中心</span></span><br><span class="line">        clustersSeeds = RandomSeedGenerator.buildRandom(conf, inPath, clustersSeeds, k, <span class="keyword">new</span> CosineDistanceMeasure());</span><br><span class="line">        KMeansDriver.run(conf, inPath, clustersSeeds, clusterOutPath, <span class="number">0.01</span>, maxIterations, <span class="keyword">true</span>, <span class="number">0.00</span>, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> System.out.println(<span class="string">"Error: Please add enough train data first"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中trainVectorList就是训练数据集。<br>关于KmeansDriver.run的具体参数表示什么，可以自行查找相关资料。</p>
+<h2 id="模型输出">模型输出</h2><p>当模型跑完之后，我们会得到模型的聚类结果，但是数据输出的又是不能直接看的文件。所以需要我们进一步的将输出文件进行转换才能得到所有的聚类结果以及聚类中心。<br>从文件中读取聚类中心：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span><br><span class="line"> * 获取聚类中心</span><br><span class="line"> * <span class="doctag">@param</span> outFile           聚类结果输出路径</span><br><span class="line"> * <span class="doctag">@return</span>                  聚类中心数据</span><br><span class="line"> * <span class="doctag">@throws</span> IOException</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;Integer, Vector&gt; getClusterCenter(String outFile) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    Map&lt;Integer, Vector&gt; keyMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    Path clusterOutPath = <span class="keyword">new</span> Path(outFile, OUTPUT_DATA_FILENAME);</span><br><span class="line">    Path clusterPointsPath = <span class="keyword">new</span> Path(clusterOutPath, CLUSTERED_POINTS_FILENAME);</span><br><span class="line">    Path outGlobPath = <span class="keyword">new</span> Path(clusterOutPath, CLUSTER_OUT_FILENAME);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//输出聚类结果</span></span><br><span class="line">    System.out.printf(<span class="string">"Dumping out clusters from clusters: %s and clusteredPoints: %s\n"</span>, outGlobPath, clusterPointsPath);</span><br><span class="line">    ClusterDumper clusterDumper = <span class="keyword">new</span> ClusterDumper(outGlobPath, clusterPointsPath);</span><br><span class="line"></span><br><span class="line">    Map&lt;Integer, List&lt;WeightedPropertyVectorWritable&gt;&gt; listMap = clusterDumper.getClusterIdToPoints();</span><br><span class="line">    <span class="keyword">for</span> (Integer key : listMap.keySet()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (listMap.get(key).size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Vector vector = <span class="keyword">new</span> RandomAccessSparseVector(listMap.get(key).get(<span class="number">0</span>).getVector().size());</span><br><span class="line">            <span class="keyword">for</span> (WeightedPropertyVectorWritable vectorWritable : listMap.get(key))</span><br><span class="line">                vector = vector.plus(vectorWritable.getVector());</span><br><span class="line">            vector = vector.divide(listMap.get(key).size());</span><br><span class="line">            keyMap.put(key, vector);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> keyMap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以及从文件中读取聚类结果<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 获取聚类结果</span><br><span class="line"> * <span class="doctag">@param</span> outFile           聚类结果的输出路径</span><br><span class="line"> * <span class="doctag">@return</span>                  返回聚类各向量的点</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Vector, Integer&gt; getClusterPoints(String outFile) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    Map&lt;Vector, Integer&gt; keyMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    Path clusterOutPath = <span class="keyword">new</span> Path(outFile, OUTPUT_DATA_FILENAME);</span><br><span class="line">    Path clusterPointsPath = <span class="keyword">new</span> Path(clusterOutPath, CLUSTERED_POINTS_FILENAME);</span><br><span class="line">    Path outGlobPath = <span class="keyword">new</span> Path(clusterOutPath, CLUSTER_OUT_FILENAME);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//输出聚类结果</span></span><br><span class="line">    System.out.printf(<span class="string">"Dumping out clusters from clusters: %s and clusteredPoints: %s\n"</span>, outGlobPath, clusterPointsPath);</span><br><span class="line">    ClusterDumper clusterDumper = <span class="keyword">new</span> ClusterDumper(outGlobPath, clusterPointsPath);</span><br><span class="line"></span><br><span class="line">    Map&lt;Integer, List&lt;WeightedPropertyVectorWritable&gt;&gt; listMap = clusterDumper.getClusterIdToPoints();</span><br><span class="line">    <span class="keyword">for</span> (Integer key : listMap.keySet()) &#123;</span><br><span class="line">        <span class="keyword">for</span> (WeightedPropertyVectorWritable vectorWritable : listMap.get(key)) &#123;</span><br><span class="line">            keyMap.put(vectorWritable.getVector(), key);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> keyMap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/study/">study</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MachineLearning/">MachineLearning</a><a href="/tags/java/">java</a><a href="/tags/mahout/">mahout</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yang9112.github.io/2015/10/27/2015-10-27-kmeans/" data-title="kmeans ---- mahout | Yang&#39;s Home" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/09/26/2015-09-26-rf/"  title="random forest ---- mahout">
+ <strong>下一篇：</strong><br/> 
+ <span>random forest ---- mahout
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/10/27/2015-10-27-kmeans/" data-title="kmeans ---- mahout" data-url="http://yang9112.github.io/2015/10/27/2015-10-27-kmeans/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#平台以及相关介绍"><span class="toc-number">1.</span> <span class="toc-text">平台以及相关介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据准备"><span class="toc-number">2.</span> <span class="toc-text">数据准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分词"><span class="toc-number">2.1.</span> <span class="toc-text">分词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量化数据"><span class="toc-number">2.2.</span> <span class="toc-text">向量化数据</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kmeans_算法使用"><span class="toc-number">3.</span> <span class="toc-text">kmeans 算法使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据输入"><span class="toc-number">3.1.</span> <span class="toc-text">数据输入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立模型"><span class="toc-number">3.2.</span> <span class="toc-text">建立模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型输出"><span class="toc-number">3.3.</span> <span class="toc-text">模型输出</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/blog/" title="blog">blog<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/study/" title="study">study<sup>5</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MachineLearning/" title="MachineLearning">MachineLearning<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mahout/" title="mahout">mahout<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MarkDown/" title="MarkDown">MarkDown<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/essay/" title="essay">essay<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weka/" title="weka">weka<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Lazy Man, Nothing Left ~ <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2662265991" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/yang9112/yang9112.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:524435966@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Anysubway">Anysubway</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"anysubway"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F6c22fb185f3f5e48c548344f8e0a4dd9' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
