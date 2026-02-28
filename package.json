@@ -6,9 +6,9 @@
   "scripts": {
     "build": "mkdir -p dist/css dist/js && npm run minify-css && npm run minify-js",
     "minify-css": "cleancss -o dist/css/style.min.css css/style.css",
-    "minify-js": "cat js/gallery.js js/totop.js > dist/js/bundle.js && ugljs dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
-    "dev:watch": "nodemon dev-server.js",
-    "dev": "node dev-server.js",
+    "minify-js": "cat js/gallery.js js/totop.js > dist/js/bundle.js && npx uglify-js dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
+    "dev": "serve -s . -p 4000",
+    "dev:watch": "nodemon --ext html,css,js --exec 'npm run dev'",
     "clean": "rm -rf dist/",
     "rebuild": "npm run clean && npm run build",
     "test": "npm run build && echo '✅ Build completed successfully'",
