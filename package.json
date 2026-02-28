@@ -8,7 +8,7 @@
     "compile-ts": "tsc",
     "minify-css": "cleancss -o dist/css/style.min.css css/style.css css/responsive.css css/darkmode.css css/components/comments.css",
     "minify-js": "cat js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js js/modules/darkmode.js js/modules/search.js > dist/js/bundle.js && npx uglify-js dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
-    "minify-js-typed": "cat dist/js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js dist/js/modules/sharing.js | npx terser -o dist/js/bundle.min.js -c -m",
+    "minify-js-typed": "npx terser dist/js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js dist/js/modules/sharing.js --compress --mangle -o dist/js/bundle.min.js",
     "copy-modules": "mkdir -p dist/js/modules && cp js/modules/*.js dist/js/modules/ && cp dist/js/modules/*.js dist/js/modules/ 2>/dev/null || true && echo '✅ Modules copied'",
     "dev": "serve -s . -p 4000",
     "dev:watch": "nodemon --ext html,css,js --exec 'npm run dev'",
