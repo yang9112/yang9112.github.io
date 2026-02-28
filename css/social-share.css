@@ -1,0 +1,112 @@
+/* Social Media Sharing Styles */
+.social-share-container {
+  margin: 2em 0;
+  padding: 1.5em 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.social-share {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.share-label {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.9em;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.share-btn i {
+  color: white;
+}
+
+/* Platform-specific colors */
+.share-weibo {
+  background: #E6162D;
+}
+
+.share-weibo:hover {
+  background: #D91222;
+}
+
+.share-twitter {
+  background: #1DA1F2;
+}
+
+.share-twitter:hover {
+  background: #1A91DA;
+}
+
+.share-facebook {
+  background: #1877F2;
+}
+
+.share-facebook:hover {
+  background: #166FE5;
+}
+
+.share-linkedin {
+  background: #0077B5;
+}
+
+.share-linkedin:hover {
+  background: #00669D;
+}
+
+.share-copy {
+  background: #6C757D;
+}
+
+.share-copy:hover {
+  background: #5A6268;
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .social-share-container {
+  border-color: #444;
+}
+
+[data-theme="dark"] .share-label {
+  color: #ccc;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .social-share {
+    justify-content: center;
+  }
+  
+  .share-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  
+  .share-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5em;
+  }
+}
