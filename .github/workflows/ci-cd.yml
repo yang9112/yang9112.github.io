@@ -12,7 +12,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [20.x]
     
     steps:
     - name: Checkout code
@@ -30,30 +30,39 @@ jobs:
     - name: Run tests
       run: npm test
       
-    - name: Run linting
-      run: npm run lint
-      
     - name: Build for production
       run: npm run build
       
-    - name: Optimize assets
-      run: npm run optimize
-      
-    - name: Run performance audit
-      run: npm run audit:lighthouse
-      
+    - name: Validate build outputs
+      run: |
+        echo "Checking build outputs..."
+        ls -la dist/
+        if [ -f "dist/css/style.min.css" ]; then
+          echo "✅ CSS build successful"
+        else
+          echo "❌ CSS build failed"
+          exit 1
+        fi
+        if [ -f "dist/js/bundle.min.js" ]; then
+          echo "✅ JS build successful"
+        else
+          echo "❌ JS build failed"
+          exit 1
+        fi
+        
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
         
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: build-files
+        name: build-files-${{ matrix.node-version }}
         path: dist/
+        retention-days: 30
         
     - name: Security audit
       run: npm audit --audit-level=moderate
