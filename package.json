@@ -7,7 +7,7 @@
     "build": "npm run optimize-images && npm run minify-css && npm run minify-js",
     "optimize-images": "node optimize-images.js",
     "minify-css": "cleancss -o dist/css/style.min.css css/style.css",
-    "minify-js": "uglifyjs js/gallery.js js/totop.js js/fancybox-init.js js/duoshuo.js js/mathjax-config.js -o dist/js/bundle.min.js",
+    "minify-js": "uglifyjs js/gallery.js js/totop.js js/fancybox-init.js js/comments.js js/mathjax-config.js -o dist/js/bundle.min.js",
     "dev": "serve -s . -p 4000",
     "clean": "rm -rf dist/ img/optimized/ fancybox/optimized/",
     "rebuild": "npm run clean && npm run build",
