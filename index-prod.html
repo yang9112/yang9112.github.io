@@ -30,6 +30,7 @@
     <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-1Mw7lRjXuB1KjHQq9b5eV9W1f5Vj6yN2hZxZm6j7cOQ4E7cTqDfVQ6OaKQe6hA1tT+4TlRmYB+V+OvGdJ+8m9nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/components/comments.css" type="text/css">
     <link rel="stylesheet" href="/css/style.min.css" type="text/css">
     
     <!-- Service Worker Registration for offline support -->
@@ -280,6 +281,42 @@
 		</p>
 </div>
 </footer>
+
+    <!-- 评论系统 -->
+    <section class="comments-section" id="comments">
+        <div class="container">
+            <div class="comments-header">
+                <h2 class="comments-title">
+                    <i class="fas fa-comments"></i>
+                    评论区
+                    <span class="comments-count">(<span id="comments-count">0</span>条评论)</span>
+                </h2>
+            </div>
+            
+            <!-- 评论表单 -->
+            <div class="comment-form">
+                <div class="form-group">
+                    <input type="text" id="comment-username" placeholder="用户名" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <textarea id="comment-content" placeholder="分享你的想法..." rows="4" maxlength="500"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button id="comment-submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> 发表评论
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 评论容器 -->
+            <div id="comments-container">
+                <div class="no-comments">
+                    <i class="fas fa-comment-slash"></i>
+                    <p>暂无评论，来发表第一条评论吧！</p>
+                </div>
+            </div>
+        </div>
+    </section>
     
     <!-- Load jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -292,6 +329,24 @@
     <!-- Load TypeScript modules -->
     <script src="/js/modules/darkmode.js"></script>
     <script src="/js/modules/search.js"></script>
+    <script src="/js/modules/comments.js"></script>
+    <script>
+        // 初始化评论系统
+        document.addEventListener('DOMContentLoaded', function() {
+            window.commentsSystem = new CommentsSystem();
+            
+            // 更新评论计数
+            function updateCommentsCount() {
+                const countElement = document.getElementById('comments-count');
+                if (countElement) {
+                    countElement.textContent = window.commentsSystem.getCommentsCount();
+                }
+            }
+            
+            // 初始更新
+            updateCommentsCount();
+        });
+    </script>
     
 
 <!-- Analytics Begin -->

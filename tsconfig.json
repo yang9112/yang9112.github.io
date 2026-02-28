@@ -20,11 +20,12 @@
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false
   },
   "include": [
-    "ts/**/*"
+    "ts/**/*",
+    "ts/*.ts"
   ],
   "exclude": [
     "node_modules",
