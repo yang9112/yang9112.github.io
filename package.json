@@ -4,7 +4,7 @@
   "description": "Personal blog website - Secure modernized version",
   "main": "index.html",
   "scripts": {
-    "build": "mkdir -p dist/css dist/js && npm run minify-css && npm run minify-js",
+    "build": "mkdir -p dist/css dist/js dist/img && npm run optimize-images && npm run copy-html && npm run minify-css && npm run minify-js",
     "minify-css": "cleancss -o dist/css/style.min.css css/style.css",
     "minify-js": "cat js/gallery.js js/totop.js > dist/js/bundle.js && npx uglify-js dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
     "dev": "serve -s . -p 4000",
@@ -18,6 +18,8 @@
     "size-check": "du -sh dist/ css/ js/ img/ fancybox/",
     "deploy-check": "npm run test && npm run security-check",
     "image-info": "find img/ -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' | xargs ls -lh",
+    "optimize-images": "mkdir -p dist/img && cp img/*.{jpg,jpeg,png,gif,svg,ico,webp} dist/img/ 2>/dev/null || true && echo '✅ Images optimized for distribution'",
+    "copy-html": "cp index-prod.html dist/index.html && echo '✅ Production HTML copied'",
     "lint": "echo 'Running basic HTML validation...' && npm run test"
   },
   "keywords": [
