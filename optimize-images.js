@@ -1,7 +1,7 @@
-const imagemin = require('imagemin');
-const imageminPngquant = require('imagemin-pngquant');
-const imageminMozjpeg = require('imagemin-mozjpeg');
-const imageminSvgo = require('imagemin-svgo');
+const { default: imagemin } = require('imagemin');
+const imageminPngquant = require('imagemin-pngquant').default;
+const imageminMozjpeg = require('imagemin-mozjpeg').default;
+const imageminSvgo = require('imagemin-svgo').default;
 const fs = require('fs');
 const path = require('path');
 
@@ -40,16 +40,15 @@ async function optimizeImages() {
         plugins: [
             imageminSvgo({
                 plugins: [
-                    'removeDimensions',
-                    'cleanupAttrs',
-                    'mergeStyles',
-                    'inlineStyles',
-                    'removeDoctype',
-                    'removeXMLProcInst',
-                    'removeComments',
-                    'removeMetadata',
-                    'removeUselessDefs',
-                    'cleanupIDs'
+                    { name: 'removeDimensions', active: true },
+                    { name: 'cleanupAttrs', active: true },
+                    { name: 'mergeStyles', active: true },
+                    { name: 'inlineStyles', active: true },
+                    { name: 'removeDoctype', active: true },
+                    { name: 'removeXMLProcInst', active: true },
+                    { name: 'removeComments', active: true },
+                    { name: 'removeMetadata', active: true },
+                    { name: 'removeUselessDefs', active: true }
                 ]
             })
         ]
