@@ -1,15 +1,15 @@
 (function($){
   // Caption
-  $('.entry').each(function(i){
-    $(this).find('img').each(function(){
-      if (!$(this).hasClass('nofancybox')){
+  $(".entry").each(function(i){
+    $(this).find("img").each(function(){
+      if (!$(this).hasClass("nofancybox")){
         var alt = this.alt;
 
         if (alt){
-          $(this).after('<span class="caption">' + alt + '</span>');
+          $(this).after("<span class=\"caption\">" + alt + "</span>");
         }
 
-        $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery' + i + '" />');
+        $(this).wrap("<a href=\"" + this.src + "\" title=\"" + alt + "\" class=\"fancybox\" rel=\"gallery" + i + "\" />");
       }
     });
   });
@@ -29,10 +29,10 @@
     });
   };
 
-  $('.gallery').each(function(){
+  $(".gallery").each(function(){
     var $this = $(this),
       current = 0,
-      photoset = $this.children('.photoset').children(),
+      photoset = $this.children(".photoset").children(),
       all = photoset.length,
       loading = true;
 
@@ -40,7 +40,7 @@
       loading = false;
     });
 
-    $this.on('click', '.prev', function(){
+    $this.on("click", ".prev", function(){
       if (!loading){
         var next = (current - 1) % all;
         loading = true;
@@ -51,7 +51,7 @@
           current = next;
         });
       }
-    }).on('click', '.next', function(){
+    }).on("click", ".next", function(){
       if (!loading){
         var next = (current + 1) % all;
         loading = true;

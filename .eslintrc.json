@@ -1,29 +1,33 @@
 {
-  "rules": {
-    "indentation": 2,
-    "quotes": ["error", "double"],
-    "semi": ["error", "always"],
-    "no-unused-vars": "warn",
-    "no-console": "off",
-    "eqeqeq": "error",
-    "curly": "error",
-    "brace-style": ["error", "1tbs"],
-    "max-len": ["warn", {
-      "code": 100,
-      "tabWidth": 2,
-      "ignoreUrls": true,
-      "ignoreComments": true,
-      "ignoreStrings": true
-    }]
-  },
   "env": {
     "browser": true,
-    "es6": true,
-    "node": true
+    "es2021": true,
+    "node": true,
+    "jquery": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended"],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 12,
     "sourceType": "module"
-  }
+  },
+  "globals": {
+    "$": "readonly",
+    "jQuery": "readonly",
+    "MathJax": "readonly",
+    "duoshuoQuery": "readonly",
+    "define": "readonly"
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "no-debugger": "warn",
+    "eqeqeq": "warn",
+    "no-empty": "warn",
+    "max-len": ["warn", { "code": 200 }]
+  },
+  "ignorePatterns": [
+    "*.min.js",
+    "node_modules/",
+    "dist/"
+  ]
 }
