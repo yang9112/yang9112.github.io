@@ -1,0 +1,308 @@
+/**
+ * Responsive CSS enhancements
+ * Modern mobile-first responsive design and performance optimizations
+ */
+
+/* Mobile-first base styles */
+@media only screen and (max-width: 320px) {
+  /* Extra small phones */
+  body {
+    font-size: 14px;
+  }
+  
+  header > div {
+    width: 98%;
+  }
+  
+  #textlogo h1.site-name {
+    font-size: 160%;
+  }
+  
+  .article-content {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  /* Small phones and phablets */
+  .mobile-view .search input {
+    width: 60%;
+  }
+  
+  .mobile-view #container {
+    width: 98%;
+  }
+  
+  .mobile-view article .article-content {
+    padding: 1em 2%;
+  }
+  
+  .mobile-view .article-share {
+    width: 100%;
+    margin-top: 1em;
+  }
+  
+  .mobile-view .comments-count {
+    font-size: 0.9em;
+  }
+}
+
+/* Mobile menu toggle styles */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0.5em;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1.2em;
+}
+
+@media only screen and (max-width: 1023px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  header nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ff9670;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    z-index: 1000;
+  }
+  
+  header nav.mobile-open {
+    max-height: 500px;
+  }
+  
+  header nav ul {
+    display: block;
+    padding: 1em 0;
+  }
+  
+  header nav ul li {
+    display: block;
+    text-align: center;
+    margin: 0.5em 0;
+  }
+  
+  header nav ul li a {
+    display: block;
+    padding: 0.8em 1em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .search {
+    text-align: center;
+    padding: 0.5em 1em;
+  }
+}
+
+/* Modern responsive images */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mobile-optimized {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Touch-friendly interface */
+@media only screen and (max-width: 768px) {
+  /* Increase touch targets */
+  .article-share a {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .social-font a {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5em;
+  }
+  
+  /* Better spacing on mobile */
+  .article-nav {
+    padding: 1em 2%;
+  }
+  
+  .article-content p {
+    margin-top: 0.8em;
+  }
+  
+  /* Mobile navigation improvements */
+  #totop {
+    display: block !important;
+    bottom: 2em;
+    right: 1em;
+  }
+}
+
+/* Performance optimizations */
+.lazy-load {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.lazy-load.loaded {
+  opacity: 1;
+}
+
+/* Preloading indicators */
+.preloading {
+  position: relative;
+  background: #f0f0f0;
+  min-height: 200px;
+}
+
+.preloading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 3px solid #ddd;
+  border-radius: 50%;
+  border-top-color: #ff9670;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Offline indicator */
+.offline-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 0.5em;
+  z-index: 9999;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.offline .offline-indicator {
+  transform: translateY(0);
+}
+
+/* Smooth scrolling for better mobile experience */
+@media only screen and (max-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Dark mode support (optional enhancement) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #1a1a1a;
+    color: #e0e0e0;
+  }
+  
+  #main section.post,
+  #main article.post-expand,
+  article .article-content {
+    background: #252525;
+    color: #e0e0e0;
+  }
+  
+  .article-content h1,
+  .article-content h2,
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6 {
+    color: #fff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animated {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  a {
+    text-decoration: underline;
+  }
+  
+  button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Focus visible for better accessibility */
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+
+.js-focus-visible .focus-visible {
+  outline: 2px solid #ff9670;
+  outline-offset: 2px;
+}
+
+/* Container queries for modern layouts */
+@container (max-width: 400px) {
+  .container-small {
+    font-size: 0.9em;
+  }
+}
+
+@container (min-width: 800px) {
+  .container-large {
+    font-size: 1.1em;
+  }
+}
+
+/* Print styles for better document printing */
+@media print {
+  header nav,
+  .article-share,
+  #totop,
+  .social-font,
+  .comments-count {
+    display: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+    color: #000;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  .article-content {
+    max-width: none;
+  }
+}
