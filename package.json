@@ -6,9 +6,9 @@
   "scripts": {
     "build": "mkdir -p dist/css dist/js dist/img dist/js/modules && npm run compile-ts && npm run optimize-images && npm run copy-html && npm run minify-css && npm run minify-js-typed",
     "compile-ts": "tsc",
-    "minify-css": "cleancss -o dist/css/style.min.css css/style.css css/responsive.css css/darkmode.css css/components/comments.css",
+    "minify-css": "cleancss -o dist/css/style.min.css css/style.css css/responsive.css css/darkmode.css css/components/comments.css css/components/enhanced-search.css",
     "minify-js": "cat js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js js/modules/darkmode.js js/modules/search.js > dist/js/bundle.js && npx uglify-js dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
-    "minify-js-typed": "npx terser dist/js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js dist/js/modules/sharing.js --compress --mangle -o dist/js/bundle.min.js",
+    "minify-js-typed": "npx terser dist/js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js dist/js/modules/sharing.js js/modules/lazyloader.js js/modules/enhanced-search.js --compress --mangle -o dist/js/bundle.min.js",
     "copy-modules": "mkdir -p dist/js/modules && cp js/modules/*.js dist/js/modules/ && cp dist/js/modules/*.js dist/js/modules/ 2>/dev/null || true && echo '✅ Modules copied'",
     "dev": "serve -s . -p 4000",
     "dev:watch": "nodemon --ext html,css,js --exec 'npm run dev'",
@@ -25,7 +25,8 @@
     "size-check": "du -sh dist/ css/ js/ img/ fancybox/",
     "deploy-check": "npm run test && npm run security-check",
     "image-info": "find img/ -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' | xargs ls -lh",
-    "optimize-images": "mkdir -p dist/img && cp img/*.{jpg,jpeg,png,gif,svg,ico,webp} dist/img/ 2>/dev/null || true && echo '✅ Images optimized for distribution'",
+    "optimize-images": "mkdir -p dist/img && npm run convert-webp && cp img/*.{jpg,jpeg,png,gif,svg,ico,webp} dist/img/ 2>/dev/null || true && echo '✅ Images optimized for distribution'",
+    "convert-webp": "echo 'Converting images to WebP format...' && for file in img/*.png img/*.jpg img/*.jpeg; do [ -f \"$$file\" ] && [ ! -f \"dist/img/$$(basename \"$$file\" .png).webp\" ] && cwebp -q 80 \"$$file\" -o \"dist/img/$$(basename \"$$file\" .png).webp\" 2>/dev/null || true; [ -f \"$$file\" ] && [ ! -f \"dist/img/$$(basename \"$$file\" .jpg).webp\" ] && cwebp -q 80 \"$$file\" -o \"dist/img/$$(basename \"$$file\" .jpg).webp\" 2>/dev/null || true; [ -f \"$$file\" ] && [ ! -f \"dist/img/$$(basename \"$$file\" .jpeg).webp\" ] && cwebp -q 80 \"$$file\" -o \"dist/img/$$(basename \"$$file\" .jpeg).webp\" 2>/dev/null || true; done && echo '✅ WebP conversion completed'",
     "copy-html": "cp index-prod.html dist/index.html && echo '✅ Production HTML copied'",
     "lint": "echo 'Running basic HTML validation...' && npm run test",
     "feature-test": "npm run test && echo '✅ Features tested: Dark Mode & Search'"
