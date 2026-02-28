@@ -6,7 +6,7 @@
   
     <title>Yang&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://hm.baidu.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://hm.baidu.com https://cdn.jsdelivr.net https://static.duoshuo.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self';">
     
     <meta name="author" content="Anysubway">
     
@@ -15,7 +15,7 @@
     <meta name="description" content="Not only a better work is needed, but also a good life is importance">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Yang's Home">
-<meta property="og:url" content="http://yang9112.github.io/index.html">
+<meta property="og:url" content="https://yang9112.github.io/index.html">
 <meta property="og:site_name" content="Yang's Home">
 <meta property="og:description" content="Not only a better work is needed, but also a good life is importance">
 <meta name="twitter:card" content="summary">
@@ -173,7 +173,7 @@
 <li>直接调用mahout-example中提供的训练方法</li>
 <li>自己根据已有的例子，自己来重新编写random forest代码</li>
 </ol>
-<p>如果要找第一种方法的命令行调用，点<a href="http://mahout.apache.org/users/classification/partial-implementation.html" target="_blank" rel="external">这里</a>，而本文主要使用了第一种方法的java实现。</p>
+<p>如果要找第一种方法的命令行调用，点<a href="https://mahout.apache.org/users/classification/partial-implementation.html" target="_blank" rel="external">这里</a>，而本文主要使用了第一种方法的java实现。</p>
 <h2 id="random_forest的java调用实现">random forest的java调用实现</h2><p>随机森林的实现分为3个部分</p>
 <h3 id="实例化数据">实例化数据</h3><p>其实也就是分析数据的组成，具体调用代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化模型参数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initModel</span><span class="params">()</span> <span class="keyword">throws</span> IOException, DescriptorException </span>&#123;</span><br><span class="line">    String[] args = <span class="keyword">new</span> String[]&#123;</span><br><span class="line">            <span class="string">"-p"</span>, Constants.DATA_FEATURE_PATH,</span><br><span class="line">            <span class="string">"-f"</span>, Constants.RF_DATA_INFO_PATH,</span><br><span class="line">            <span class="string">"-d"</span>,  Constants.RF_FEATURE_NUM, <span class="string">"N"</span>, <span class="string">"L"</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//如果输出路径有文件存在，则删除</span></span><br><span class="line">    HadoopUtil.delete(<span class="keyword">new</span> Configuration(), <span class="keyword">new</span> Path(args[Arrays.asList(args).indexOf(<span class="string">"-f"</span>) + <span class="number">1</span>]));</span><br><span class="line">    Describe.main(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>参数表示：</p>
@@ -427,7 +427,7 @@
 <ul>
 <li>github账号一个</li>
 <li><a href="https://nodejs.org/en/" target="_blank" rel="external">安装</a> Node.js</li>
-<li><a href="http://www.git-scm.com/download/" target="_blank" rel="external">安装</a> Git(目测GitShell也支持，未尝试=。=）</li>
+<li><a href="https://www.git-scm.com/download/" target="_blank" rel="external">安装</a> Git(目测GitShell也支持，未尝试=。=）</li>
 </ul>
 </blockquote>
 <h2 id="安装Hexo">安装Hexo</h2><ol>
@@ -445,12 +445,12 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g //根据已有的配置生成网页文件</span><br><span class="line">hexo s //启动在本地查看效果的服务</span><br></pre></td></tr></table></figure>
 <p>浏览器输入<code>localhost:4000</code>即可查看本地生成的页面了。</p>
 <h2 id="如何托管代码到github">如何托管代码到github</h2><p>找到hexo主目录中的配置文件<code>_config.ymp</code></p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Deployment</span></span><br><span class="line"><span class="preprocessor">## Docs: http://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="label">deploy:</span></span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line"><span class="label">branch:</span> master</span><br></pre></td></tr></table></figure>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Deployment</span></span><br><span class="line"><span class="preprocessor">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="label">deploy:</span></span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line"><span class="label">branch:</span> master</span><br></pre></td></tr></table></figure>
 <p>只需要将上述代码中的username换成自己用户名就好了。至于如何通过github生成自己的动态网页生成自己的网页地址，在网上有着详细的教程，这里就不展开了（毕竟只是log）。</p>
 <p>毕竟只是菜鸟，后续有学习体会继续更新~~</p>
 <h2 id="部分Q&amp;A">部分Q&amp;A</h2><p>安装过程中遇到的部分问题，以及解决办法</p>
 <h3 id="Q：hexo_d命令无法上传github">Q：<code>hexo d</code>命令无法上传github</h3><p>配置文件有问题，如果配置文件的路径没有问题，那么可能是https上传有问题（部分情况会有无法识别用户名等错误），通过修改为ssh地址以及修改origin的url:<code>git remote origin ssh_url</code>完成上传。</p>
-<h3 id="Q：主题怎么修改">Q：主题怎么修改</h3><p><code>git clone THEMES/PATH/TO/GITHUB PATH/TO/HEXO/ROOT/themes/THEMES_NAME</code> 然后修改配置文件即可<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Extensions</span></span><br><span class="line"><span class="preprocessor">## Plugins: http://hexo.io/plugins/</span></span><br><span class="line"><span class="preprocessor">## Themes: http://hexo.io/themes/</span></span><br><span class="line">theme: THEME_NAME</span><br></pre></td></tr></table></figure></p>
+<h3 id="Q：主题怎么修改">Q：主题怎么修改</h3><p><code>git clone THEMES/PATH/TO/GITHUB PATH/TO/HEXO/ROOT/themes/THEMES_NAME</code> 然后修改配置文件即可<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Extensions</span></span><br><span class="line"><span class="preprocessor">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="preprocessor">## Themes: https://hexo.io/themes/</span></span><br><span class="line">theme: THEME_NAME</span><br></pre></td></tr></table></figure></p>
 
         
         
@@ -634,7 +634,7 @@
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
-    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1;isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
 </div>
 
 
@@ -656,7 +656,7 @@
 	 
 	<div class="social-font" class="clearfix">
 		
-		<a href="http://weibo.com/2662265991" target="_blank" class="icon-weibo" title="微博"></a>
+		<a href="https://weibo.com/2662265991" target="_blank" class="icon-weibo" title="微博"></a>
 		
 		
 		<a href="https://github.com/yang9112/yang9112.github.io" target="_blank" class="icon-github" title="github"></a>
@@ -676,7 +676,7 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		Powered by <a href="https://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
 		
 		<a href="/about" target="_blank" title="Anysubway">Anysubway</a>
 		
@@ -737,17 +737,7 @@ $(document).ready(function(){
 
 
 
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"anysubway"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+<script src="/js/duoshuo.js"></script> 
 
 
 
@@ -757,24 +747,7 @@ $(document).ready(function(){
 
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
-</script>
+<script src="/js/fancybox-init.js"></script>
 
 
 
@@ -799,34 +772,7 @@ $(document).ready(function(){
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="/js/mathjax-config.js"></script>
 
 
 <!-- MathJax End -->
