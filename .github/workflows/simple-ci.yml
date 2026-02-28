@@ -1,0 +1,44 @@
+name: Simple CI Test
+
+on:
+  push:
+    branches: [ security-and-modernization-2024 ]
+
+jobs:
+  simple-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Test basic setup
+      run: |
+        node --version
+        npm --version
+        ls -la
+        
+    - name: Test CSS minification only
+      run: |
+        mkdir -p dist/css
+        npm run minify-css
+        
+    - name: Test JS minification only  
+      run: |
+        mkdir -p dist/js
+        npm run minify-js
+        
+    - name: Verify outputs
+      run: |
+        ls -la dist/
+        echo "Files in dist:"
+        find dist/ -type f
