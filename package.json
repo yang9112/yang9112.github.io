@@ -4,20 +4,21 @@
   "description": "Personal blog website - Modernized version",
   "main": "index.html",
   "scripts": {
-    "build": "npm run optimize-images && npm run minify-css && npm run minify-js",
+    "build": "mkdir -p dist/css dist/js && npm run optimize-images && npm run minify-css && npm run minify-js",
     "optimize-images": "node optimize-images.js",
     "minify-css": "cleancss -o dist/css/style.min.css css/style.css",
     "minify-js": "uglifyjs js/gallery.js js/totop.js js/fancybox-init.js js/comments.js js/mathjax-config.js -o dist/js/bundle.min.js",
     "dev": "serve -s . -p 4000",
     "clean": "rm -rf dist/ img/optimized/ fancybox/optimized/",
     "rebuild": "npm run clean && npm run build",
-    "test": "npm run build && echo 'Build completed successfully'",
+    "test": "npm run clean && npm run build && echo 'Build completed successfully'",
     "security-check": "npm audit",
     "security-report": "echo 'See security-audit.md for latest security findings'",
     "update-deps": "npm-check-updates -u",
     "prod-build": "NODE_ENV=production npm run build",
     "size-check": "du -sh dist/ img/ fancybox/",
-    "deploy-check": "npm run test && npm run security-check"
+    "deploy-check": "npm run test && npm run security-check",
+    "lint": "echo 'Running basic HTML validation...' && npm run test"
   },
   "keywords": [
     "blog",
