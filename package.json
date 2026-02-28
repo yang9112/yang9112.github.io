@@ -4,7 +4,7 @@
   "description": "Personal blog website - Modernized version",
   "main": "index.html",
   "scripts": {
-    "build": "npm run optimize-images && npm run minify-css && npm run minify-js",
+    "build": "mkdir -p dist/css dist/js && npm run optimize-images && npm run minify-css && npm run minify-js",
     "optimize-images": "node optimize-images.js",
     "minify-css": "cleancss -o dist/css/style.min.css css/style.css",
     "minify-js": "uglifyjs js/gallery.js js/totop.js js/fancybox-init.js js/duoshuo.js js/mathjax-config.js -o dist/js/bundle.min.js",
@@ -33,13 +33,13 @@
     "imagemin-mozjpeg": "^10.0.0",
     "imagemin-pngquant": "^10.0.0",
     "imagemin-svgo": "^12.0.0",
-    "npm-check-updates": "^16.14.20",
-    "serve": "^14.2.1",
+    "npm-check-updates": "^19.6.3",
+    "serve": "^14.2.5",
     "uglify-js": "^3.19.3"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.5.1",
-    "jquery": "^3.7.1"
+    "@fortawesome/fontawesome-free": "^7.2.0",
+    "jquery": "^4.0.0"
   },
   "browserslist": [
     "> 1%",
