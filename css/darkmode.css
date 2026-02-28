@@ -1,0 +1,146 @@
+/* Dark mode styles */
+:root {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #3a3a3a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --accent: #ff9670;
+  --accent-hover: #ff4e08;
+  --border-color: #444;
+  --code-bg: #2d2d2d;
+  --link-color: #4db8ff;
+  --link-hover: #80d4ff;
+}
+
+body.dark-mode {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body.dark-mode body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body.dark-mode #main section.post,
+body.dark-mode #main article.post-expand,
+body.dark-mode #page-nav,
+body.dark-mode .archive-title,
+body.dark-mode .post,
+body.dark-mode .page,
+body.dark-mode .link,
+body.dark-mode .photo,
+body.dark-mode #asidepart,
+body.dark-mode .toc-article {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+body.dark-mode body > header {
+  background: linear-gradient(135deg, #2d2d2d, #3a3a3a);
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode #textlogo h1.site-name,
+body.dark-mode #textlogo h2.blog-motto {
+  color: var(--text-primary);
+}
+
+body.dark-mode a {
+  color: var(--link-color);
+}
+
+body.dark-mode a:hover {
+  color: var(--link-hover);
+}
+
+body.dark-mode #main section.post a h1,
+body.dark-mode article header.article-info > h1,
+body.dark-mode .article-content h1,
+body.dark-mode .article-content h2,
+body.dark-mode .article-content h3,
+body.dark-mode .article-content h4,
+body.dark-mode .article-content h5,
+body.dark-mode .article-content h6 {
+  color: var(--text-primary);
+}
+
+body.dark-mode .article-content {
+  color: var(--text-primary);
+}
+
+body.dark-mode .article-content pre,
+body.dark-mode .article-content .highlight,
+body.dark-mode .article-content .highlight pre {
+  background: var(--code-bg);
+  color: #ccc;
+}
+
+body.dark-mode .search input {
+  background: transparent;
+  border: 1px solid var(--text-primary);
+  color: var(--text-primary);
+}
+
+body.dark-mode .search input::placeholder {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .article-share a:hover:before {
+  color: var(--text-primary);
+}
+
+body.dark-mode footer {
+  background: #0a0a0a;
+}
+
+body.dark-mode .info,
+body.dark-mode .copyright {
+  color: var(--text-primary);
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode-toggle:hover {
+  background: var(--accent-hover);
+  transform: scale(1.1);
+}
+
+body.dark-mode .dark-mode-toggle {
+  background: #4db8ff;
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+  background: #80d4ff;
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+  .dark-mode-toggle {
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}

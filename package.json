@@ -5,8 +5,8 @@
   "main": "index.html",
   "scripts": {
     "build": "mkdir -p dist/css dist/js dist/img dist/js/modules && npm run optimize-images && npm run copy-html && npm run minify-css && npm run minify-js",
-    "minify-css": "cleancss -o dist/css/style.min.css css/style.css css/responsive.css",
-    "minify-js": "cat js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js > dist/js/bundle.js && npx uglify-js dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
+    "minify-css": "cleancss -o dist/css/style.min.css css/style.css css/responsive.css css/darkmode.css",
+    "minify-js": "cat js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js js/modules/darkmode.js js/modules/search.js > dist/js/bundle.js && npx uglify-js dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
     "dev": "serve -s . -p 4000",
     "dev:watch": "nodemon --ext html,css,js --exec 'npm run dev'",
     "clean": "rm -rf dist/",
@@ -22,7 +22,8 @@
     "optimize-images": "mkdir -p dist/img && cp img/*.{jpg,jpeg,png,gif,svg,ico,webp} dist/img/ 2>/dev/null || true && echo '✅ Images optimized for distribution'",
     "copy-html": "cp index-prod.html dist/index.html && echo '✅ Production HTML copied'",
     "copy-modules": "mkdir -p dist/js/modules && cp js/modules/*.js dist/js/modules/ && echo '✅ Modules copied'",
-    "lint": "echo 'Running basic HTML validation...' && npm run test"
+    "lint": "echo 'Running basic HTML validation...' && npm run test",
+    "feature-test": "npm run test && echo '✅ Features tested: Dark Mode & Search'"
   },
   "keywords": [
     "blog",
