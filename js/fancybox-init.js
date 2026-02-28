@@ -1,16 +1,20 @@
 $(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
+  $(".article-content").each(function(i){
+    $(this).find("img").each(function(){
+      if ($(this).parent().hasClass("fancybox")) {
+return;
+}
       var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+      if (alt) {
+$(this).after("<span class=\"caption\">" + alt + "</span>");
+}
+      $(this).wrap("<a href=\"" + this.src + "\" title=\"" + alt + "\" class=\"fancybox\"></a>");
     });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
+    $(this).find(".fancybox").each(function(){
+      $(this).attr("rel", "article" + i);
     });
   });
   if($.fancybox){
-    $('.fancybox').fancybox();
+    $(".fancybox").fancybox();
   }
 });

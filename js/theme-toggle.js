@@ -1,7 +1,7 @@
 // Theme toggle functionality
 function initThemeToggle() {
-    const themeToggle = document.createElement('button');
-    themeToggle.innerHTML = '🌙';
+    const themeToggle = document.createElement("button");
+    themeToggle.innerHTML = "🌙";
     themeToggle.style.cssText = `
         position: fixed;
         top: 20px;
@@ -17,32 +17,32 @@ function initThemeToggle() {
         transition: all 0.3s ease;
     `;
     
-    themeToggle.addEventListener('click', () => {
+    themeToggle.addEventListener("click", () => {
         const body = document.body;
-        const isDark = body.classList.contains('dark-theme');
+        const isDark = body.classList.contains("dark-theme");
         
         if (isDark) {
-            body.classList.remove('dark-theme');
-            themeToggle.innerHTML = '🌙';
-            localStorage.setItem('theme', 'light');
+            body.classList.remove("dark-theme");
+            themeToggle.innerHTML = "🌙";
+            localStorage.setItem("theme", "light");
         } else {
-            body.classList.add('dark-theme');
-            themeToggle.innerHTML = '☀️';
-            localStorage.setItem('theme', 'dark');
+            body.classList.add("dark-theme");
+            themeToggle.innerHTML = "☀️";
+            localStorage.setItem("theme", "dark");
         }
     });
     
     document.body.appendChild(themeToggle);
     
     // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        themeToggle.innerHTML = '☀️';
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-theme");
+        themeToggle.innerHTML = "☀️";
     }
     
     // Add dark theme styles
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
         .dark-theme {
             background: #1a1a1a !important;
@@ -73,8 +73,8 @@ function initThemeToggle() {
 }
 
 // Initialize theme toggle when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initThemeToggle);
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initThemeToggle);
 } else {
     initThemeToggle();
 }

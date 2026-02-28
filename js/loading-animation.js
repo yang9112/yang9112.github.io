@@ -59,14 +59,14 @@ function initLoadingAnimation() {
     `;
     
     // Insert loading overlay at the beginning of body
-    document.body.insertAdjacentHTML('afterbegin', loadingHTML);
+    document.body.insertAdjacentHTML("afterbegin", loadingHTML);
     
     // Hide loading overlay when page is fully loaded
-    window.addEventListener('load', function() {
+    window.addEventListener("load", function() {
         setTimeout(() => {
-            const overlay = document.getElementById('loading-overlay');
+            const overlay = document.getElementById("loading-overlay");
             if (overlay) {
-                overlay.style.opacity = '0';
+                overlay.style.opacity = "0";
                 setTimeout(() => {
                     overlay.remove();
                 }, 500);
@@ -76,9 +76,9 @@ function initLoadingAnimation() {
     
     // Fallback: hide after 5 seconds even if load event doesn't fire
     setTimeout(() => {
-        const overlay = document.getElementById('loading-overlay');
+        const overlay = document.getElementById("loading-overlay");
         if (overlay) {
-            overlay.style.opacity = '0';
+            overlay.style.opacity = "0";
             setTimeout(() => {
                 overlay.remove();
             }, 500);
@@ -87,8 +87,8 @@ function initLoadingAnimation() {
 }
 
 // Initialize loading animation when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLoadingAnimation);
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLoadingAnimation);
 } else {
     initLoadingAnimation();
 }
