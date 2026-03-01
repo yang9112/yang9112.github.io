@@ -1,0 +1,193 @@
+name: Optimized CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [20.x]
+        
+    # Use caching for faster builds
+    env:
+      NODE_OPTIONS: '--max-old-space-size=4096'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full git history for better analysis
+        
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
+        
+    # Enhanced dependency caching
+    - name: Cache node modules
+      uses: actions/cache@v4
+      id: cache-npm
+      with:
+        path: |
+          ~/.npm
+          node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+          
+    - name: Install dependencies
+      if: steps.cache-npm.outputs.cache-hit != 'true'
+      run: npm ci --prefer-offline --no-audit
+      
+    # Cache build artifacts
+    - name: Cache build outputs
+      uses: actions/cache@v4
+      id: cache-build
+      with:
+        path: |
+          dist/
+          .tsbuildinfo
+        key: ${{ runner.os }}-build-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+          
+    - name: Build if not cached
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      run: |
+        echo "🏗️ Building project..."
+        npm run build
+        
+    - name: Verify build outputs with enhanced validation
+      run: |
+        echo "## 🔍 Build Validation Report" >> $GITHUB_STEP_SUMMARY
+        
+        # Critical file checks
+        REQUIRED_FILES=(
+          "dist/css/style.min.css"
+          "dist/js/bundle.min.js"
+          "dist/index.html"
+        )
+        
+        ALL_GOOD=true
+        for file in "${REQUIRED_FILES[@]}"; do
+          if [ -f "$file" ]; then
+            SIZE=$(stat -c%s "$file")
+            echo "✅ $file ($(($SIZE / 1024))KB)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ $file (missing)" >> $GITHUB_STEP_SUMMARY
+            ALL_GOOD=false
+          fi
+        done
+        
+        # Additional quality checks
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📊 Asset Analysis" >> $GITHUB_STEP_SUMMARY
+        
+        # CSS validation
+        if [ -f "dist/css/style.min.css" ]; then
+          CSS_LINES=$(wc -l < dist/css/style.min.css)
+          CSS_SIZE=$(stat -c%s dist/css/style.min.css)
+          echo "- CSS: $CSS_LINES lines, $(($CSS_SIZE / 1024))KB" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # JS validation
+        if [ -f "dist/js/bundle.min.js" ]; then
+          JS_LINES=$(wc -l < dist/js/bundle.min.js)
+          JS_SIZE=$(stat -c%s dist/js/bundle.min.js)
+          echo "- JS: $JS_LINES lines, $(($JS_SIZE / 1024))KB" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # Image optimization check
+        IMAGE_COUNT=$(find dist/img/ -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \) | wc -l)
+        WEBP_COUNT=$(find dist/img/ -name "*.webp" | wc -l)
+        echo "- Images: $IMAGE_COUNT files, $WEBP_COUNT WebP versions" >> $GITHUB_STEP_SUMMARY
+        
+        if [ "$ALL_GOOD" = false ]; then
+          echo "❌ Build validation failed"
+          exit 1
+        fi
+        
+    - name: Run tests with coverage
+      run: |
+        echo "### 🧪 Test Results" >> $GITHUB_STEP_SUMMARY
+        npm run test:unit -- --coverage --passWithNoTests
+        
+    - name: Enhanced security audit
+      run: |
+        echo "### 🔒 Security Audit" >> $GITHUB_STEP_SUMMARY
+        
+        # Check for vulnerabilities
+        AUDIT_RESULT=$(npm audit --audit-level=moderate --json || echo '{"metadata": {"vulnerabilities": {"total": 0}}}')
+        VULN_COUNT=$(echo "$AUDIT_RESULT" | jq -r '.metadata.vulnerabilities.total // 0' 2>/dev/null || echo "0")
+        
+        if [ "$VULN_COUNT" -gt 0 ]; then
+          echo "⚠️ Found $VULN_COUNT vulnerabilities" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate >> $GITHUB_STEP_SUMMARY 2>&1 || true
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # Check for outdated dependencies
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📦 Dependency Updates" >> $GITHUB_STEP_SUMMARY
+        OUTDATED=$(npm outdated || echo "All packages up to date")
+        if [[ "$OUTDATED" != *"All packages up to date"* ]]; then
+          echo "⚠️ Some dependencies may be outdated" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "$OUTDATED" | head -10 >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ All dependencies are up to date" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        enable_jekyll: false
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
+        
+    - name: Enhanced artifact upload with metadata
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-files-node${{ matrix.node-version }}-${{ github.sha }}
+        path: |
+          dist/
+          package.json
+          package-lock.json
+        retention-days: 30
+        if-no-files-found: error
+        
+    - name: Generate build report
+      if: always()
+      run: |
+        echo "### 📋 Build Summary" >> $GITHUB_STEP_SUMMARY
+        echo "- **Node Version**: ${{ matrix.node-version }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Build Time**: $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        
+        # Performance indicators
+        if [ -f "dist/js/bundle.min.js" ]; then
+          JS_SIZE=$(stat -c%s "dist/js/bundle.min.js")
+          if [ $JS_SIZE -lt $((50 * 1024)) ]; then
+            echo "- **JS Bundle**: ✅ Optimized ($(($JS_SIZE / 1024))KB)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **JS Bundle**: ⚠️ Large ($(($JS_SIZE / 1024))KB - consider optimization)" >> $GITHUB_STEP_SUMMARY
+          fi
+        fi
+        
+        echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY

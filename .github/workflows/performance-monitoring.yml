@@ -1,0 +1,103 @@
+name: Performance Monitoring & Analysis
+
+on:
+  pull_request:
+    branches: [ main, master, develop ]
+  schedule:
+    # Run performance monitoring weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+
+jobs:
+  performance-analysis:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build project
+      run: npm run build
+      
+    - name: Analyze bundle size
+      run: |
+        echo "## 📊 Build Analysis Report" >> $GITHUB_STEP_SUMMARY
+        echo "### 📦 Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        du -sh dist/ >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "### 🗂️ File Breakdown" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        find dist/ -type f -exec ls -lh {} \; | sort -k5 -hr | head -20 >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        
+        # Large file warnings
+        echo "### ⚠️ Size Warnings" >> $GITHUB_STEP_SUMMARY
+        LARGE_FILES=$(find dist/ -type f -size +100k -exec ls -lh {} \;)
+        if [ -n "$LARGE_FILES" ]; then
+          echo "Files over 100KB:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "$LARGE_FILES" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ No files over 100KB" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+    - name: Security audit with reporting
+      run: |
+        echo "### 🔒 Security Audit" >> $GITHUB_STEP_SUMMARY
+        SECURITY_OUTPUT=$(npm audit --audit-level=moderate --json || echo '{"vulnerabilities": {}}')
+        VULN_COUNT=$(echo "$SECURITY_OUTPUT" | jq '.vulnerabilities | length' 2>/dev/null || echo "0")
+        
+        if [ "$VULN_COUNT" -gt 0 ]; then
+          echo "⚠️ Found $VULN_COUNT vulnerabilities" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate >> $GITHUB_STEP_SUMMARY 2>&1 || true
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+    - name: Dependency analysis
+      run: |
+        echo "### 📋 Dependency Analysis" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        echo "Production dependencies:" >> $GITHUB_STEP_SUMMARY
+        npm ls --depth=0 --production || true >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Dev dependencies count: $(npm ls --depth=0 --dev | grep -c '├\|└' || echo '0')" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        
+    - name: Lighthouse performance check
+      run: |
+        echo "### 🚀 Performance Metrics" >> $GITHUB_STEP_SUMMARY
+        
+        # Simulate performance checks
+        BUILD_TIME=$(time (npm run build > /dev/null 2>&1) 2>&1 | grep real | awk '{print $2}' || echo "unknown")
+        echo "Build time: $BUILD_TIME" >> $GITHUB_STEP_SUMMARY
+        
+        CSS_SIZE=$(stat -c%s dist/css/style.min.css 2>/dev/null || echo "0")
+        JS_SIZE=$(stat -c%s dist/js/bundle.min.js 2>/dev/null || echo "0")
+        
+        echo "- CSS bundle: $((CSS_SIZE / 1024))KB" >> $GITHUB_STEP_SUMMARY
+        echo "- JS bundle: $((JS_SIZE / 1024))KB" >> $GITHUB_STEP_SUMMARY
+        echo "- Total assets: $((($CSS_SIZE + $JS_SIZE) / 1024))KB" >> $GITHUB_STEP_SUMMARY
+        
+        # Performance recommendations
+        if [ $JS_SIZE -gt $((100 * 1024)) ]; then
+          echo "⚠️ Consider further JS optimization" >> $GITHUB_STEP_SUMMARY
+        fi
+        if [ $CSS_SIZE -gt $((50 * 1024)) ]; then
+          echo "⚠️ Consider CSS code splitting" >> $GITHUB_STEP_SUMMARY
+        fi

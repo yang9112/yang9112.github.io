@@ -29,7 +29,9 @@
     "convert-webp": "echo 'Converting images to WebP format...' && for file in img/*.png img/*.jpg img/*.jpeg; do [ -f \"$$file\" ] && [ ! -f \"dist/img/$$(basename \"$$file\" .png).webp\" ] && cwebp -q 80 \"$$file\" -o \"dist/img/$$(basename \"$$file\" .png).webp\" 2>/dev/null || true; [ -f \"$$file\" ] && [ ! -f \"dist/img/$$(basename \"$$file\" .jpg).webp\" ] && cwebp -q 80 \"$$file\" -o \"dist/img/$$(basename \"$$file\" .jpg).webp\" 2>/dev/null || true; [ -f \"$$file\" ] && [ ! -f \"dist/img/$$(basename \"$$file\" .jpeg).webp\" ] && cwebp -q 80 \"$$file\" -o \"dist/img/$$(basename \"$$file\" .jpeg).webp\" 2>/dev/null || true; done && echo '✅ WebP conversion completed'",
     "copy-html": "cp index-prod.html dist/index.html && echo '✅ Production HTML copied'",
     "lint": "echo 'Running basic HTML validation...' && npm run test",
-    "feature-test": "npm run test && echo '✅ Features tested: Dark Mode & Search'"
+    "feature-test": "npm run test && echo '✅ Features tested: Dark Mode & Search'",
+    "build-monitor": "node scripts/build-monitor.js",
+    "analyze": "npm run build && npm run build-monitor"
   },
   "keywords": [
     "blog",
