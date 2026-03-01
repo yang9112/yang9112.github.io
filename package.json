@@ -6,7 +6,7 @@
   "scripts": {
     "build": "mkdir -p dist/css dist/js dist/img dist/js/modules && npm run compile-ts && npm run optimize-images && npm run copy-html && npm run minify-css && npm run minify-js-typed",
     "compile-ts": "tsc",
-    "minify-css": "cleancss -o dist/css/style.min.css css/style.css css/responsive.css css/darkmode.css css/components/comments.css css/components/enhanced-search.css css/components/enhanced-comments.css",
+    "minify-css": "cleancss -o dist/css/style.min.css css/style.css css/responsive.css css/darkmode.css css/components/comments.css css/components/enhanced-search.css css/components/enhanced-comments.css css/components/breadcrumb.css",
     "minify-js": "cat js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js js/modules/darkmode.js js/modules/search.js > dist/js/bundle.js && npx uglify-js dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
     "minify-js-typed": "npx terser dist/js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js dist/js/modules/sharing.js js/modules/lazyloader.js js/modules/enhanced-search.js js/modules/enhanced-comments.js --compress --mangle -o dist/js/bundle.min.js",
     "copy-modules": "mkdir -p dist/js/modules && cp js/modules/*.js dist/js/modules/ && cp dist/js/modules/*.js dist/js/modules/ 2>/dev/null || true && echo '✅ Modules copied'",

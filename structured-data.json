@@ -1,0 +1,27 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Yang's Home",
+  "description": "Not only a better work is needed, but also a good life is importance",
+  "url": "https://yang9112.github.io",
+  "author": {
+    "@type": "Person",
+    "name": "Anysubway",
+    "url": "https://yang9112.github.io"
+  },
+  "inLanguage": "zh-CN",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yang's Home",
+    "url": "https://yang9112.github.io"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://yang9112.github.io/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yang9112.github.io"
+  }
+}

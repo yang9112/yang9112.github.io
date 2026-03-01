@@ -1,0 +1,76 @@
+/**
+ * Breadcrumb Navigation for SEO and User Experience
+ * Provides structured navigation and search engine benefits
+ */
+
+.breadcrumb {
+  padding: 1em 0;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9em;
+}
+
+.breadcrumb ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.breadcrumb li {
+  margin-right: 0.5em;
+}
+
+.breadcrumb li:not(:last-child)::after {
+  content: '/';
+  margin-left: 0.5em;
+  color: #666;
+}
+
+.breadcrumb a {
+  color: #ff9670;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: #ff7744;
+  text-decoration: underline;
+}
+
+.breadcrumb .current {
+  color: #333;
+  font-weight: 500;
+}
+
+/* Structured data hidden but available for search engines */
+.breadcrumb .structured-data {
+  display: none;
+}
+
+/* Responsive breadcrumb */
+@media only screen and (max-width: 768px) {
+  .breadcrumb {
+    font-size: 0.8em;
+    padding: 0.8em 0;
+  }
+  
+  .readcrumb ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5em;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .breadcrumb {
+    border-bottom-color: #444;
+  }
+  
+  .breadcrumb .current {
+    color: #e0e0e0;
+  }
+}
