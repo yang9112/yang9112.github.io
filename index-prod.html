@@ -75,6 +75,10 @@
     <link rel="stylesheet" href="/css/components/comments.css" type="text/css">
     <link rel="stylesheet" href="/css/style.min.css" type="text/css">
     
+    <!-- Preload critical JavaScript -->
+    <link rel="preload" href="/js/modules/loader.js" as="script">
+    <link rel="preload" href="/dist/js/critical.min.js" as="script">
+    
     <!-- Service Worker Registration for offline support -->
     <script>
       if ('serviceWorker' in navigator) {
@@ -376,10 +380,8 @@
     <!-- Load ImagesLoaded plugin for Gallery functionality -->
     <script src="/js/jquery.imagesloaded.min.js"></script>
     
-    <!-- Load modern modular JavaScript bundle -->
-    <script src="/js/bundle.min.js"></script>
-    <!-- Load TypeScript modules -->
-    <script src="/js/modules/darkmode.js"></script>
+    <!-- Load JavaScript modules with optimal loading strategy -->
+    <script src="/js/modules/loader.js"></script>
     <script src="/js/modules/search.js"></script>
     <script src="/js/modules/comments.js"></script>
     <script>
