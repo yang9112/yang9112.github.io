@@ -8,7 +8,7 @@
     "compile-ts": "tsc",
     "minify-css": "cleancss -o dist/css/style.min.css css/style.css css/responsive.css css/darkmode.css css/components/comments.css css/components/enhanced-search.css css/components/enhanced-comments.css css/components/breadcrumb.css",
     "minify-js": "cat js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js js/modules/darkmode.js js/modules/search.js > dist/js/bundle.js && npx uglify-js dist/js/bundle.js -o dist/js/bundle.min.js -c -m",
-    "minify-js-typed": "npx terser dist/js/app.js js/modules/gallery.js js/modules/scrollToTop.js js/modules/responsive.js js/modules/preloader.js js/modules/socialShare.js js/modules/lazyloader.js js/modules/enhanced-search.js js/modules/enhanced-comments.js --compress --mangle -o dist/js/bundle.min.js",
+    "minify-js-typed": "npm run build-critical && npm run build-enhanced && npm run build-core",
     "build-critical": "npx terser dist/js/app.js js/modules/responsive.js js/modules/preloader.js js/modules/darkmode.js --compress --mangle -o dist/js/critical.min.js",
     "build-enhanced": "npx terser js/modules/enhanced-search.js js/modules/enhanced-comments.js js/modules/socialShare.js js/modules/lazyloader.js --compress --mangle -o dist/js/enhanced.min.js",
     "build-core": "npx terser js/modules/gallery.js js/modules/scrollToTop.js --compress --mangle -o dist/js/core.min.js",
