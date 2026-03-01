@@ -5,7 +5,7 @@
   
     <title>Yang&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://hm.baidu.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://avatars.githubusercontent.com; connect-src 'self' https://api.github.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://hm.baidu.com https://cdn.jsdelivr.net; style-src 'self' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://avatars.githubusercontent.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none';">
     
     <meta name="author" content="Anysubway">
     
@@ -50,12 +50,22 @@
 </head>
 
   <body class="js-loaded">
+    <!-- Dark Mode Toggle Button -->
+    <button class="dark-mode-toggle" id="darkModeToggle" title="切换深色模式" aria-label="切换深色模式">
+        <i class="fas fa-moon"></i>
+    </button>
     <header>
       
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo2.png" alt="Yang&#39;s Home" title="Yang&#39;s Home"/></a>
+				<a href="/">
+					<picture>
+						<source srcset="/img/logo2.webp" type="image/webp">
+						<source srcset="/img/logo2.png" type="image/png">
+						<img src="/img/logo2.png" alt="Yang&#39;s Home" title="Yang&#39;s Home" loading="lazy"/>
+					</picture>
+				</a>
 			</div>
 			
 			<div id="textlogo">
